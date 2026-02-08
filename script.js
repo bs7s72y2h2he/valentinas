@@ -15,7 +15,6 @@ const cardsData = [
 
 const cardsGrid = document.getElementById("cards-grid");
 const scoreValue = document.getElementById("score-value");
-const shuffleButton = document.getElementById("shuffle-cards");
 const cardsToggle = document.getElementById("cards-toggle");
 const cardsSection = document.querySelector(".cards");
 const heartsContainer = document.querySelector(".background-hearts");
@@ -60,7 +59,7 @@ const updateDaysCounter = () => {
   const startDate = new Date(targetDate.year, targetDate.month - 1, targetDate.day);
   const now = new Date();
   if (now < startDate) {
-    daysCounterValue.textContent = "Kartu: 0 men. 0 d. 0 val. 0 min. 0 sek.";
+    daysCounterValue.textContent = "Kartu: 0 mėn. 0 d. 0 val. 0 min. 0 sek.";
     return;
   }
 
@@ -80,7 +79,7 @@ const updateDaysCounter = () => {
   const seconds = Math.floor((diffMs % 60000) / 1000);
   const minutesLabel = String(minutes).padStart(2, "0");
   const secondsLabel = String(seconds).padStart(2, "0");
-  daysCounterValue.textContent = `Kartu: ${months} men. ${days} d. ${hours} val. ${minutesLabel} min. ${secondsLabel} sek.`;
+  daysCounterValue.textContent = `Kartu: ${months} mėn. ${days} d. ${hours} val. ${minutesLabel} min. ${secondsLabel} sek.`;
 };
 
 
@@ -176,7 +175,7 @@ const setCardsExpanded = (isExpanded) => {
   cardsSection.classList.toggle("cards--collapsed", !isExpanded);
   if (cardsToggle) {
     cardsToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
-    cardsToggle.textContent = isExpanded ? "Slepti korteles" : "Iskleisti korteles";
+    cardsToggle.textContent = isExpanded ? "Slėpti korteles" : "Išskleisti korteles";
   }
   if (isExpanded) {
     window.requestAnimationFrame(() => {
@@ -370,15 +369,6 @@ const renderCards = (data) => {
   });
 };
 
-const shuffleCards = () => {
-  const shuffled = [...cardsData].sort(() => Math.random() - 0.5);
-  score = 0;
-  scoreValue.textContent = "0";
-  renderCards(shuffled);
-};
-
-
-shuffleButton.addEventListener("click", shuffleCards);
 
 if (cardsToggle) {
   cardsToggle.addEventListener("click", () => {
@@ -643,10 +633,12 @@ if (envelope) {
   });
 }
 
+const root = document.documentElement;
 if (shouldAutoUnlock()) {
   gate?.classList.add("is-hidden");
   document.body.classList.remove("is-locked");
 }
+root.classList.remove("gate-preload");
 
 window.addEventListener("resize", () => {
   refreshHearts();
