@@ -29,6 +29,7 @@ const gateDateInput = document.getElementById("gate-date");
 const gateError = document.getElementById("gate-error");
 const celebration = document.getElementById("celebration");
 const mobileCardMedia = window.matchMedia("(max-width: 600px)");
+const touchMedia = window.matchMedia("(hover: none) and (pointer: coarse)");
 const envelope = document.getElementById("love-envelope");
 const envelopePaper = document.getElementById("love-letter");
 let ribbonTimer;
@@ -42,6 +43,14 @@ const scratchRadius = 18;
 let audioContext;
 let isTouchScratching = false;
 let touchMoveListenerAdded = false;
+
+const updateInputModeClass = () => {
+  if (touchMedia.matches) {
+    document.body.classList.add("is-touch");
+  } else {
+    document.body.classList.remove("is-touch");
+  }
+};
 
 const setGateInputMode = () => {
   if (!gateDateInput) return;
@@ -342,7 +351,9 @@ if (cardsToggle) {
 
 renderCards(cardsData);
 
-setCardsExpanded(!mobileCardMedia.matches ? true : false);
+setCardsExpanded(false);
+
+updateInputModeClass();
 
 document.querySelectorAll(".memory-box").forEach((box) => {
   const lid = box.querySelector(".memory-box__lid");
@@ -607,7 +618,6 @@ window.addEventListener("resize", () => {
   });
   if (mobileCardMedia.matches) {
     setCardsExpanded(false);
-  } else {
-    setCardsExpanded(true);
   }
+  updateInputModeClass();
 });

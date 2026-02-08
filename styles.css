@@ -1219,6 +1219,17 @@ h2 {
   }
 }
 
+.is-touch .memory-box__lid,
+.is-touch .memory-box__heart {
+  display: none;
+}
+
+.is-touch .memory-box img {
+  opacity: 1;
+  transform: none;
+  max-height: 240px;
+}
+
 @media (max-width: 420px) {
   .envelope {
     height: 210px;
