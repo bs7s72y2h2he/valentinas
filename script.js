@@ -59,7 +59,7 @@ const updateDaysCounter = () => {
   const startDate = new Date(targetDate.year, targetDate.month - 1, targetDate.day);
   const now = new Date();
   if (now < startDate) {
-    daysCounterValue.textContent = "Kartu: 0 mėn. 0 d. 0 val. 0 min. 0 sek.";
+    daysCounterValue.textContent = " 0 mėn. 0 d. 0 val. 0 min. 0 sek.";
     return;
   }
 
