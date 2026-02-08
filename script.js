@@ -32,6 +32,7 @@ const mobileCardMedia = window.matchMedia("(max-width: 600px)");
 const touchMedia = window.matchMedia("(hover: none) and (pointer: coarse)");
 const envelope = document.getElementById("love-envelope");
 const envelopePaper = document.getElementById("love-letter");
+const daysCounterValue = document.getElementById("days-counter-value");
 let ribbonTimer;
 
 let score = 0;
@@ -43,6 +44,42 @@ const scratchRadius = 18;
 let audioContext;
 let isTouchScratching = false;
 let touchMoveListenerAdded = false;
+
+const addMonths = (date, monthsToAdd) => {
+  const result = new Date(date);
+  const day = result.getDate();
+  result.setDate(1);
+  result.setMonth(result.getMonth() + monthsToAdd);
+  const lastDay = new Date(result.getFullYear(), result.getMonth() + 1, 0).getDate();
+  result.setDate(Math.min(day, lastDay));
+  return result;
+};
+
+const updateDaysCounter = () => {
+  if (!daysCounterValue) return;
+  const startDate = new Date(targetDate.year, targetDate.month - 1, targetDate.day);
+  const now = new Date();
+  if (now < startDate) {
+    daysCounterValue.textContent = "Kartu: 0 men. 0 d. 0 val. 0 sek.";
+    return;
+  }
+
+  let months =
+    (now.getFullYear() - startDate.getFullYear()) * 12 +
+    (now.getMonth() - startDate.getMonth());
+  let anchor = addMonths(startDate, months);
+  if (anchor > now) {
+    months -= 1;
+    anchor = addMonths(startDate, months);
+  }
+
+  const diffMs = now.getTime() - anchor.getTime();
+  const days = Math.floor(diffMs / 86400000);
+  const hours = Math.floor((diffMs % 86400000) / 3600000);
+  const seconds = Math.floor((diffMs % 3600000) / 1000);
+  const secondsLabel = String(seconds).padStart(2, "0");
+  daysCounterValue.textContent = `Kartu: ${months} men. ${days} d. ${hours} val. ${secondsLabel} sek.`;
+};
 
 
 const updateInputModeClass = () => {
@@ -64,6 +101,9 @@ const setGateInputMode = () => {
     gateDateInput.setAttribute("inputmode", "numeric");
   }
 };
+
+updateDaysCounter();
+setInterval(updateDaysCounter, 1000);
 
 const playRevealSound = () => {
   try {
@@ -135,13 +175,6 @@ const setCardsExpanded = (isExpanded) => {
   if (cardsToggle) {
     cardsToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
     cardsToggle.textContent = isExpanded ? "Slepti korteles" : "Iskleisti korteles";
-  }
-  if (mobileCardMedia.matches && !isExpanded) {
-    document.querySelectorAll(".card").forEach((card) => {
-      if (!card.classList.contains("is-revealed")) {
-        setCardCollapsed(card, true);
-      }
-    });
   }
 };
 
@@ -327,9 +360,6 @@ const renderCards = (data) => {
       setupScratchCanvas(card, canvas);
     }
     attachCardExpandHandler(card);
-    if (mobileCardMedia.matches) {
-      setCardCollapsed(card, !card.classList.contains("is-revealed"));
-    }
   });
 };
 
