@@ -31,6 +31,7 @@ const celebration = document.getElementById("celebration");
 const mobileCardMedia = window.matchMedia("(max-width: 600px)");
 const envelope = document.getElementById("love-envelope");
 const envelopePaper = document.getElementById("love-letter");
+let ribbonTimer;
 
 let score = 0;
 const targetDate = { year: 2025, month: 7, day: 31 };
@@ -334,7 +335,6 @@ shuffleButton.addEventListener("click", shuffleCards);
 
 if (cardsToggle) {
   cardsToggle.addEventListener("click", () => {
-    if (!mobileCardMedia.matches) return;
     const isExpanded = !cardsSection?.classList.contains("cards--collapsed");
     setCardsExpanded(!isExpanded);
   });
@@ -568,11 +568,29 @@ const setEnvelopeOpen = (isOpen) => {
     envelopePaper.setAttribute("aria-hidden", isOpen ? "false" : "true");
   }
   envelope.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  if (!isOpen) {
+    envelope.classList.remove("is-ribbon-untie");
+  }
+};
+
+const triggerRibbonUntie = () => {
+  if (!envelope) return;
+  envelope.classList.remove("is-ribbon-untie");
+  void envelope.offsetWidth;
+  envelope.classList.add("is-ribbon-untie");
+  if (ribbonTimer) window.clearTimeout(ribbonTimer);
+  ribbonTimer = window.setTimeout(() => {
+    envelope.classList.remove("is-ribbon-untie");
+  }, 900);
 };
 
 if (envelope) {
   envelope.addEventListener("click", () => {
-    setEnvelopeOpen(!envelope.classList.contains("is-open"));
+    const willOpen = !envelope.classList.contains("is-open");
+    setEnvelopeOpen(willOpen);
+    if (willOpen) {
+      triggerRibbonUntie();
+    }
   });
 }
 
