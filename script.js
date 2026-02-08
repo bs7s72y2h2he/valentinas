@@ -34,6 +34,8 @@ const unlockCacheKey = "valentinoUnlock";
 const unlockTtlMs = 10 * 60 * 1000;
 const scratchRadius = 18;
 let audioContext;
+let isTouchScratching = false;
+let touchMoveListenerAdded = false;
 
 const setGateInputMode = () => {
   if (!gateDateInput) return;
@@ -100,6 +102,17 @@ const setupScratchCanvas = (card, canvas) => {
   const context = canvas.getContext("2d", { willReadFrequently: true });
   if (!context) return;
 
+  if (!touchMoveListenerAdded) {
+    document.addEventListener(
+      "touchmove",
+      (event) => {
+        if (isTouchScratching) event.preventDefault();
+      },
+      { passive: false }
+    );
+    touchMoveListenerAdded = true;
+  }
+
   const drawOverlay = () => {
     const rect = card.getBoundingClientRect();
     const ratio = window.devicePixelRatio || 1;
@@ -131,10 +144,10 @@ const setupScratchCanvas = (card, canvas) => {
 
   let isDrawing = false;
 
-  const scratchAt = (event) => {
+  const scratchAtPoint = (clientX, clientY) => {
     const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
     context.beginPath();
     context.arc(x, y, scratchRadius, 0, Math.PI * 2);
@@ -171,7 +184,7 @@ const setupScratchCanvas = (card, canvas) => {
     event.preventDefault();
     isDrawing = true;
     canvas.setPointerCapture(event.pointerId);
-    scratchAt(event);
+    scratchAtPoint(event.clientX, event.clientY);
   };
 
   let revealTimer;
@@ -186,7 +199,7 @@ const setupScratchCanvas = (card, canvas) => {
   const moveScratch = (event) => {
     event.preventDefault();
     if (!isDrawing) return;
-    scratchAt(event);
+    scratchAtPoint(event.clientX, event.clientY);
     scheduleRevealCheck();
   };
 
@@ -198,6 +211,31 @@ const setupScratchCanvas = (card, canvas) => {
     checkReveal();
   };
 
+  const startTouch = (event) => {
+    event.preventDefault();
+    if (!event.touches?.length) return;
+    isDrawing = true;
+    isTouchScratching = true;
+    const touch = event.touches[0];
+    scratchAtPoint(touch.clientX, touch.clientY);
+  };
+
+  const moveTouch = (event) => {
+    event.preventDefault();
+    if (!isDrawing || !event.touches?.length) return;
+    const touch = event.touches[0];
+    scratchAtPoint(touch.clientX, touch.clientY);
+    scheduleRevealCheck();
+  };
+
+  const endTouch = (event) => {
+    event.preventDefault();
+    if (!isDrawing) return;
+    isDrawing = false;
+    isTouchScratching = false;
+    checkReveal();
+  };
+
   const passiveFalse = { passive: false };
 
   canvas.addEventListener("pointerdown", startScratch, passiveFalse);
@@ -205,9 +243,10 @@ const setupScratchCanvas = (card, canvas) => {
   canvas.addEventListener("pointerup", endScratch, passiveFalse);
   canvas.addEventListener("pointercancel", endScratch, passiveFalse);
 
-  canvas.addEventListener("touchstart", startScratch, passiveFalse);
-  canvas.addEventListener("touchmove", moveScratch, passiveFalse);
-  canvas.addEventListener("touchend", endScratch, passiveFalse);
+  canvas.addEventListener("touchstart", startTouch, passiveFalse);
+  canvas.addEventListener("touchmove", moveTouch, passiveFalse);
+  canvas.addEventListener("touchend", endTouch, passiveFalse);
+  canvas.addEventListener("touchcancel", endTouch, passiveFalse);
 
   window.addEventListener("resize", () => {
     if (!card.classList.contains("is-revealed")) {
