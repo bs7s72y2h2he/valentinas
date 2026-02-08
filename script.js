@@ -27,6 +27,8 @@ const gateDateInput = document.getElementById("gate-date");
 const gateError = document.getElementById("gate-error");
 const celebration = document.getElementById("celebration");
 const mobileCardMedia = window.matchMedia("(max-width: 600px)");
+const envelope = document.getElementById("love-envelope");
+const envelopePaper = document.getElementById("love-letter");
 
 let score = 0;
 const targetDate = { year: 2025, month: 7, day: 31 };
@@ -528,6 +530,21 @@ if (gateForm) {
     } else if (gateError) {
       gateError.textContent = "Netinkama data. Pabandyk dar.";
     }
+  });
+}
+
+const setEnvelopeOpen = (isOpen) => {
+  if (!envelope) return;
+  envelope.classList.toggle("is-open", isOpen);
+  if (envelopePaper) {
+    envelopePaper.setAttribute("aria-hidden", isOpen ? "false" : "true");
+  }
+  envelope.setAttribute("aria-expanded", isOpen ? "true" : "false");
+};
+
+if (envelope) {
+  envelope.addEventListener("click", () => {
+    setEnvelopeOpen(!envelope.classList.contains("is-open"));
   });
 }
 
