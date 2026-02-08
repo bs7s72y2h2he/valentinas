@@ -859,6 +859,8 @@ h2 {
 .note__content {
   display: grid;
   gap: 1rem;
+  justify-items: center;
+  text-align: center;
 }
 
 .envelope {

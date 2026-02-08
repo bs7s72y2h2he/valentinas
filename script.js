@@ -44,6 +44,7 @@ let audioContext;
 let isTouchScratching = false;
 let touchMoveListenerAdded = false;
 
+
 const updateInputModeClass = () => {
   if (touchMedia.matches) {
     document.body.classList.add("is-touch");
@@ -558,7 +559,7 @@ if (gateForm) {
 
     if (!parts && !matchesByDigits) {
       if (gateError) {
-        gateError.textContent = "Ivesk data (YYYY-MM-DD arba 31.07.2025).";
+        gateError.textContent = "Ivesk data (YYYY-MM-DD).";
       }
       return;
     }
