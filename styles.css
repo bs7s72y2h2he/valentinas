@@ -1160,14 +1160,7 @@ h2 {
     padding: 1rem 0.9rem 1.2rem;
   }
 
-  .memory-box__lid,
-  .memory-box__heart {
-    display: none;
-  }
-
   .memory-box img {
-    opacity: 1;
-    transform: none;
     max-height: 200px;
     object-fit: contain;
     background: transparent;
@@ -1230,18 +1223,6 @@ h2 {
   }
 }
 
-.is-touch .memory-box__lid,
-.is-touch .memory-box__heart {
-  display: none;
-}
-
-.is-touch .memory-box img {
-  opacity: 1;
-  transform: none;
-  max-height: 200px;
-  object-fit: contain;
-  background: transparent;
-}
 
 @media (max-width: 420px) {
   .envelope {
