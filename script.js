@@ -79,7 +79,7 @@ const updateDaysCounter = () => {
   const seconds = Math.floor((diffMs % 60000) / 1000);
   const minutesLabel = String(minutes).padStart(2, "0");
   const secondsLabel = String(seconds).padStart(2, "0");
-  daysCounterValue.textContent = `Kartu: ${months} mėn. ${days} d. ${hours} val. ${minutesLabel} min. ${secondsLabel} sek.`;
+  daysCounterValue.textContent = `${months} mėn. ${days} d. ${hours} val. ${minutesLabel} min. ${secondsLabel} sek.`;
 };
 
 
@@ -614,7 +614,7 @@ if (gateForm) {
 
     if (!parts && !matchesByDigits) {
       if (gateError) {
-        gateError.textContent = "Ivesk data (YYYY-MM-DD).";
+        gateError.textContent = "Įvesk datą (YYYY-MM-DD).";
       }
       return;
     }
@@ -623,7 +623,7 @@ if (gateForm) {
       if (gateError) gateError.textContent = "";
       unlockPage();
     } else if (gateError) {
-      gateError.textContent = "Netinkama data. Pabandyk dar.";
+      gateError.textContent = "Netinkama data. Pabandyk dar kartą.";
     }
   });
 }

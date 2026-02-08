@@ -1274,20 +1274,22 @@ h2 {
   }
 
   .days-counter {
-    top: 1rem;
-    right: 1rem;
-    padding: 0.65rem 0.75rem 0.7rem;
+    position: fixed;
+    top: calc(env(safe-area-inset-top) + 0.6rem);
+    right: 0.6rem;
+    left: auto;
+    padding: 0.55rem 0.65rem 0.6rem;
     min-width: 0;
-    max-width: 92vw;
+    max-width: 86vw;
   }
 
   .days-counter__label {
-    font-size: 0.52rem;
-    letter-spacing: 0.16em;
+    font-size: 0.48rem;
+    letter-spacing: 0.14em;
   }
 
   .days-counter__value {
-    font-size: 0.82rem;
+    font-size: 0.76rem;
     white-space: normal;
     line-height: 1.25;
     word-break: break-word;
