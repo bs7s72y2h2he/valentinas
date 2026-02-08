@@ -1026,6 +1026,21 @@ h2 {
     gap: 1.2rem;
   }
 
+  .memory-box {
+    padding: 1rem 0.9rem 1.2rem;
+  }
+
+  .memory-box__lid,
+  .memory-box__heart {
+    display: none;
+  }
+
+  .memory-box img {
+    opacity: 1;
+    transform: none;
+    max-height: 240px;
+  }
+
   .note {
     padding: 2rem;
     gap: 1.6rem;

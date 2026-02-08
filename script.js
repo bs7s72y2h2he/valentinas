@@ -342,7 +342,7 @@ if (cardsToggle) {
 
 renderCards(cardsData);
 
-setCardsExpanded(!mobileCardMedia.matches);
+setCardsExpanded(!mobileCardMedia.matches ? true : false);
 
 document.querySelectorAll(".memory-box").forEach((box) => {
   const lid = box.querySelector(".memory-box__lid");
@@ -587,5 +587,9 @@ window.addEventListener("resize", () => {
     const shouldCollapse = mobileCardMedia.matches && !card.classList.contains("is-revealed");
     setCardCollapsed(card, shouldCollapse);
   });
-  setCardsExpanded(!mobileCardMedia.matches || cardsSection?.classList.contains("cards--collapsed") === false);
+  if (mobileCardMedia.matches) {
+    setCardsExpanded(false);
+  } else {
+    setCardsExpanded(true);
+  }
 });
