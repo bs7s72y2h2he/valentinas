@@ -510,19 +510,20 @@ const parseDateParts = (value) => {
     const firstFour = Number(digitsOnly.slice(0, 4));
     const lastFour = Number(digitsOnly.slice(4));
 
-    if (firstFour >= 1900) {
-      const year = firstFour;
-      const month = Number(digitsOnly.slice(4, 6));
-      const day = Number(digitsOnly.slice(6, 8));
-      return isValidDate({ year, month, day }) ? { year, month, day } : null;
-    }
+    const ymd = {
+      year: firstFour,
+      month: Number(digitsOnly.slice(4, 6)),
+      day: Number(digitsOnly.slice(6, 8))
+    };
+    const dmy = {
+      year: lastFour,
+      month: Number(digitsOnly.slice(2, 4)),
+      day: Number(digitsOnly.slice(0, 2))
+    };
 
-    if (lastFour >= 1900) {
-      const year = lastFour;
-      const day = Number(digitsOnly.slice(0, 2));
-      const month = Number(digitsOnly.slice(2, 4));
-      return isValidDate({ year, month, day }) ? { year, month, day } : null;
-    }
+    if (firstFour >= 1900 && isValidDate(ymd)) return ymd;
+    if (lastFour >= 1900 && isValidDate(dmy)) return dmy;
+    return null;
   }
 
   const parts = trimmed.split(/\D+/).filter(Boolean);
