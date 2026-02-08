@@ -526,6 +526,13 @@ const parseDateParts = (value) => {
     return null;
   }
 
+  if (digitsOnly.length === 6) {
+    const day = Number(digitsOnly.slice(0, 2));
+    const month = Number(digitsOnly.slice(2, 4));
+    const year = 2000 + Number(digitsOnly.slice(4, 6));
+    return isValidDate({ year, month, day }) ? { year, month, day } : null;
+  }
+
   const parts = trimmed.split(/\D+/).filter(Boolean);
   if (parts.length !== 3) return null;
 
@@ -554,7 +561,21 @@ const parseDateParts = (value) => {
       month = second;
     }
   } else {
-    return null;
+    if (parts[2].length === 2) {
+      year = 2000 + third;
+      if (first <= 12 && second <= 12) {
+        month = first;
+        day = second;
+      } else if (first > 12) {
+        day = first;
+        month = second;
+      } else {
+        day = first;
+        month = second;
+      }
+    } else {
+      return null;
+    }
   }
 
   return isValidDate({ year, month, day }) ? { year, month, day } : null;
@@ -571,6 +592,13 @@ if (gateForm) {
     event.preventDefault();
     if (!gateDateInput) return;
 
+    const digits = gateDateInput.value.replace(/\D/g, "");
+    if (digits === "20250731") {
+      if (gateError) gateError.textContent = "";
+      unlockPage();
+      return;
+    }
+
     const partsFromText = parseDateParts(gateDateInput.value);
     const partsFromPicker = gateDateInput.valueAsDate
       ? {
@@ -581,7 +609,6 @@ if (gateForm) {
       : null;
 
     const parts = partsFromText || partsFromPicker;
-    const digits = gateDateInput.value.replace(/\D/g, "");
     const matchesByDigits =
       digits === "20250731" || digits === "31072025" || digits === "07312025";
 
