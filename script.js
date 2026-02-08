@@ -338,6 +338,26 @@ const parseDateParts = (value) => {
   const trimmed = value.trim();
   if (!trimmed) return null;
 
+  const digitsOnly = trimmed.replace(/\D/g, "");
+  if (digitsOnly.length === 8) {
+    const firstFour = Number(digitsOnly.slice(0, 4));
+    const lastFour = Number(digitsOnly.slice(4));
+
+    if (firstFour >= 1900) {
+      const year = firstFour;
+      const month = Number(digitsOnly.slice(4, 6));
+      const day = Number(digitsOnly.slice(6, 8));
+      return isValidDate({ year, month, day }) ? { year, month, day } : null;
+    }
+
+    if (lastFour >= 1900) {
+      const year = lastFour;
+      const day = Number(digitsOnly.slice(0, 2));
+      const month = Number(digitsOnly.slice(2, 4));
+      return isValidDate({ year, month, day }) ? { year, month, day } : null;
+    }
+  }
+
   const parts = trimmed.split(/\D+/).filter(Boolean);
   if (parts.length !== 3) return null;
 
