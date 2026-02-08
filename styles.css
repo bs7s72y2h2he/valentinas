@@ -737,6 +737,7 @@ h2 {
   height: 100%;
   cursor: pointer;
   transition: opacity 0.3s ease;
+  touch-action: none;
 }
 
 .card.is-revealed .card__scratch {
