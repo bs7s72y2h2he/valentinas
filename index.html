@@ -21,7 +21,14 @@
         <p class="gate__lead">Tik teisinga data atrakina si puslapi.</p>
         <form class="gate__form" id="gate-form">
           <label class="gate__label" for="gate-date">Data</label>
-          <input id="gate-date" type="date" required inputmode="numeric" />
+          <input
+            id="gate-date"
+            type="text"
+            required
+            inputmode="numeric"
+            placeholder="YYYY-MM-DD"
+            autocomplete="off"
+          />
           <button class="button" type="submit">Atidaryti</button>
           <p class="gate__error" id="gate-error" role="status" aria-live="polite"></p>
         </form>
@@ -31,21 +38,20 @@
       <div class="celebration__card">
         <p class="celebration__eyebrow">Valentino diena</p>
         <h2>Su meiles svente!</h2>
-        <p class="celebration__lead">Tegul si diena buna pilna siltu akimirku.</p>
+        <p class="celebration__lead">Tegul ši diena būna pilna šiltų akimirkų.</p>
       </div>
     </div>
     <div class="heart-controls" aria-label="Širdelių nustatymai">
-      <button class="heart-controls__toggle" id="heart-toggle" type="button" aria-label="Rodyti arba slėpti nustatymus">
-        <span class="heart-controls__icon" aria-hidden="true">&hearts;</span>
-        <span class="heart-controls__text">Nustatymai</span>
-      </button>
+      <div class="heart-controls__header">
+        <button class="heart-controls__toggle" id="heart-toggle" type="button" aria-label="Rodyti arba slėpti nustatymus">
+          <span class="heart-controls__icon" aria-hidden="true">&hearts;</span>
+          <span class="heart-controls__text">Nustatymai</span>
+        </button>
+        <button class="heart-controls__close" id="heart-close" type="button" aria-label="Uždaryti nustatymus">×</button>
+      </div>
       <label class="heart-controls__item" for="heart-brightness">
         Ryskumas
         <input id="heart-brightness" type="range" min="0.3" max="1" step="0.05" value="0.85" />
-      </label>
-      <label class="heart-controls__item" for="heart-brightness-boost">
-        Pariskinimas
-        <input id="heart-brightness-boost" type="range" min="0.9" max="2" step="0.05" value="1.15" />
       </label>
       <label class="heart-controls__item" for="heart-speed">
         Greitis
@@ -56,32 +62,21 @@
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero__content">
           <p class="hero__kicker">Mano siurprizas tau</p>
-          <h1 id="hero-title">Kodėl tu nuostabi</h1>
+          <div class="hero__title-wrap">
+            <span class="hero__petals" aria-hidden="true"></span>
+            <h1 id="hero-title">Kodėl tu nuostabi</h1>
+          </div>
           <p class="hero__lead">
-            Ši svetainė skirta tik tau. Paspausk korteles, surink širdeles ir
+            Ši svetainė skirta tik tau. Nutrink korteles, surink širdeles ir
             atrask mažas priežastis, dėl kurių aš šypsausi.
           </p>
           <div class="hero__actions">
             <button class="button" id="shuffle-cards">Išmaišyti korteles</button>
-            <button class="button button--ghost" id="reveal-all">Atversti visas</button>
           </div>
         </div>
         <div class="hero__photo">
           <img src="assets/photo-1.jpg" alt="Mūsų nuotrauka" />
           <span class="hero__badge">Tik tau</span>
-        </div>
-      </section>
-
-      <section class="gallery" aria-labelledby="gallery-title">
-        <div class="section-title">
-          <h2 id="gallery-title">Mūsų akimirkos</h2>
-          <p>Idėk kelias nuotraukas ir sukurk mažą prisiminimų sieną.</p>
-        </div>
-        <div class="gallery__grid">
-          <img src="assets/photo-2.jpg" alt="Mūsų akimirka" />
-          <img src="assets/photo-3.jpg" alt="Mūsų akimirka" />
-          <img src="assets/photo-4.jpg" alt="Mūsų akimirka" />
-          <img src="assets/photo-5.jpg" alt="Mūsų akimirka" />
         </div>
       </section>
 
@@ -94,6 +89,51 @@
         <div class="score">
           <span class="score__label">Sirdeles:</span>
           <span class="score__value" id="score-value">0</span>
+        </div>
+      </section>
+
+      <section class="gallery" aria-labelledby="gallery-title">
+        <div class="section-title">
+          <h2 id="gallery-title">Mūsų akimirkos</h2>
+          <p>Idėk kelias nuotraukas ir sukurk mažą prisiminimų sieną.</p>
+        </div>
+        <div class="gallery__grid">
+          <article class="memory-box">
+            <button class="memory-box__lid" type="button" aria-label="Atrišti kaspiną ir atverti dėžutę">
+              <span class="memory-box__knot" aria-hidden="true"></span>
+              <span class="memory-box__ribbon"></span>
+              <span class="memory-box__seal">&#9829;</span>
+            </button>
+            <span class="memory-box__heart" aria-hidden="true"></span>
+            <img src="assets/photo-2.jpg" alt="Mūsų akimirka" />
+          </article>
+          <article class="memory-box">
+            <button class="memory-box__lid" type="button" aria-label="Atrišti kaspiną ir atverti dėžutę">
+              <span class="memory-box__knot" aria-hidden="true"></span>
+              <span class="memory-box__ribbon"></span>
+              <span class="memory-box__seal">&#9829;</span>
+            </button>
+            <span class="memory-box__heart" aria-hidden="true"></span>
+            <img src="assets/photo-3.jpg" alt="Mūsų akimirka" />
+          </article>
+          <article class="memory-box">
+            <button class="memory-box__lid" type="button" aria-label="Atrišti kaspiną ir atverti dėžutę">
+              <span class="memory-box__knot" aria-hidden="true"></span>
+              <span class="memory-box__ribbon"></span>
+              <span class="memory-box__seal">&#9829;</span>
+            </button>
+            <span class="memory-box__heart" aria-hidden="true"></span>
+            <img src="assets/photo-4.jpg" alt="Mūsų akimirka" />
+          </article>
+          <article class="memory-box">
+            <button class="memory-box__lid" type="button" aria-label="Atrišti kaspiną ir atverti dėžutę">
+              <span class="memory-box__knot" aria-hidden="true"></span>
+              <span class="memory-box__ribbon"></span>
+              <span class="memory-box__seal">&#9829;</span>
+            </button>
+            <span class="memory-box__heart" aria-hidden="true"></span>
+            <img src="assets/photo-5.jpg" alt="Mūsų akimirka" />
+          </article>
         </div>
       </section>
 

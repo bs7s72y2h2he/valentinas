@@ -1,7 +1,7 @@
 const cardsData = [
   "Tavo sypsena padaro diena sviesesne",
   "Tu moki nusijuokti is smulkmenu",
-  "Tavo rankos visada silto namu jausmo",
+  "Tavo apkabinimai yra mano ramybe",
   "Tu kuri musu saugia erdve",
   "Su tavimi viskas tampa nuotykis",
   "Tavo akys pasako daugiau nei zodziai",
@@ -16,12 +16,11 @@ const cardsData = [
 const cardsGrid = document.getElementById("cards-grid");
 const scoreValue = document.getElementById("score-value");
 const shuffleButton = document.getElementById("shuffle-cards");
-const revealButton = document.getElementById("reveal-all");
 const heartsContainer = document.querySelector(".background-hearts");
 const brightnessSlider = document.getElementById("heart-brightness");
-const brightnessBoostSlider = document.getElementById("heart-brightness-boost");
 const speedSlider = document.getElementById("heart-speed");
 const heartToggle = document.getElementById("heart-toggle");
+const heartClose = document.getElementById("heart-close");
 const gate = document.getElementById("gate");
 const gateForm = document.getElementById("gate-form");
 const gateDateInput = document.getElementById("gate-date");
@@ -31,45 +30,180 @@ const celebration = document.getElementById("celebration");
 let score = 0;
 const targetDate = { year: 2025, month: 7, day: 31 };
 const celebrationDuration = 2200;
+const unlockCacheKey = "valentinoUnlock";
+const unlockTtlMs = 10 * 60 * 1000;
+const scratchRadius = 18;
+let audioContext;
+
+const playRevealSound = () => {
+  try {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioContext.state === "suspended") {
+      audioContext.resume();
+    }
+
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = 880;
+    gainNode.gain.value = 0.06;
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start();
+    gainNode.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioContext.currentTime + 0.12
+    );
+    oscillator.stop(audioContext.currentTime + 0.13);
+  } catch (error) {
+    // Ignore audio errors (autoplay restrictions, unsupported API)
+  }
+};
 
 const createCard = (text) => {
-  const card = document.createElement("button");
+  const card = document.createElement("div");
   card.className = "card";
-  card.type = "button";
-  card.setAttribute("aria-label", "Atversti kortele");
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", "Nutrinti kortele");
 
-  const inner = document.createElement("div");
-  inner.className = "card__inner";
+  const content = document.createElement("div");
+  content.className = "card__content";
+  content.textContent = text;
 
-  const front = document.createElement("div");
-  front.className = "card__face card__face--front";
-  front.innerHTML = '<span class="card__icon">\u2665</span>';
+  const canvas = document.createElement("canvas");
+  canvas.className = "card__scratch";
+  canvas.setAttribute("aria-hidden", "true");
 
-  const back = document.createElement("div");
-  back.className = "card__face card__face--back";
-  back.textContent = text;
-
-  inner.append(front, back);
-  card.append(inner);
-
-  card.addEventListener("click", () => {
-    if (card.classList.contains("is-flipped")) {
-      card.classList.remove("is-flipped");
-      score = Math.max(0, score - 1);
-    } else {
-      card.classList.add("is-flipped");
-      score += 1;
-    }
-    scoreValue.textContent = score.toString();
-  });
+  card.append(content, canvas);
 
   return card;
+};
+
+const setupScratchCanvas = (card, canvas) => {
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+  if (!context) return;
+
+  const drawOverlay = () => {
+    const rect = card.getBoundingClientRect();
+    const ratio = window.devicePixelRatio || 1;
+
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    canvas.style.width = `${rect.width}px`;
+    canvas.style.height = `${rect.height}px`;
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    context.globalCompositeOperation = "source-over";
+    context.fillStyle = "#f36f7f";
+    context.fillRect(0, 0, rect.width, rect.height);
+
+    context.fillStyle = "rgba(255, 255, 255, 0.25)";
+    for (let i = 0; i < 18; i += 1) {
+      const x = Math.random() * rect.width;
+      const y = Math.random() * rect.height;
+      const r = 3 + Math.random() * 4;
+      context.beginPath();
+      context.arc(x, y, r, 0, Math.PI * 2);
+      context.fill();
+    }
+
+    context.globalCompositeOperation = "destination-out";
+  };
+
+  drawOverlay();
+
+  let isDrawing = false;
+
+  const scratchAt = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    context.beginPath();
+    context.arc(x, y, scratchRadius, 0, Math.PI * 2);
+    context.fill();
+  };
+
+  const checkReveal = () => {
+    if (card.classList.contains("is-revealed")) return;
+    const { width, height } = canvas;
+    const imageData = context.getImageData(0, 0, width, height);
+    const pixels = imageData.data;
+    const step = 24;
+    let cleared = 0;
+    let total = 0;
+
+    for (let y = 0; y < height; y += step) {
+      for (let x = 0; x < width; x += step) {
+        const index = (y * width + x) * 4 + 3;
+        total += 1;
+        if (pixels[index] < 12) cleared += 1;
+      }
+    }
+
+    if (cleared / total > 0.25) {
+      card.classList.add("is-revealed");
+      score += 1;
+      scoreValue.textContent = score.toString();
+      playRevealSound();
+      context.clearRect(0, 0, width, height);
+    }
+  };
+
+  const startScratch = (event) => {
+    isDrawing = true;
+    canvas.setPointerCapture(event.pointerId);
+    scratchAt(event);
+  };
+
+  let revealTimer;
+  const scheduleRevealCheck = () => {
+    if (revealTimer) return;
+    revealTimer = window.setTimeout(() => {
+      revealTimer = null;
+      checkReveal();
+    }, 180);
+  };
+
+  const moveScratch = (event) => {
+    if (!isDrawing) return;
+    scratchAt(event);
+    scheduleRevealCheck();
+  };
+
+  const endScratch = (event) => {
+    if (!isDrawing) return;
+    isDrawing = false;
+    canvas.releasePointerCapture(event.pointerId);
+    checkReveal();
+  };
+
+  canvas.addEventListener("pointerdown", startScratch);
+  canvas.addEventListener("pointermove", moveScratch);
+  canvas.addEventListener("pointerup", endScratch);
+  canvas.addEventListener("pointercancel", endScratch);
+
+  window.addEventListener("resize", () => {
+    if (!card.classList.contains("is-revealed")) {
+      drawOverlay();
+    }
+  });
 };
 
 const renderCards = (data) => {
   cardsGrid.innerHTML = "";
   data.forEach((text) => {
-    cardsGrid.append(createCard(text));
+    const card = createCard(text);
+    cardsGrid.append(card);
+    const canvas = card.querySelector(".card__scratch");
+    if (canvas) {
+      setupScratchCanvas(card, canvas);
+    }
   });
 };
 
@@ -80,17 +214,17 @@ const shuffleCards = () => {
   renderCards(shuffled);
 };
 
-const revealAll = () => {
-  const allCards = cardsGrid.querySelectorAll(".card");
-  score = allCards.length;
-  scoreValue.textContent = score.toString();
-  allCards.forEach((card) => card.classList.add("is-flipped"));
-};
 
 shuffleButton.addEventListener("click", shuffleCards);
-revealButton.addEventListener("click", revealAll);
 
 renderCards(cardsData);
+
+document.querySelectorAll(".memory-box").forEach((box) => {
+  const lid = box.querySelector(".memory-box__lid");
+  lid?.addEventListener("click", () => {
+    box.classList.toggle("is-open");
+  });
+});
 
 const createFloatingHearts = (count) => {
   if (!heartsContainer) return;
@@ -101,7 +235,7 @@ const createFloatingHearts = (count) => {
     heart.className = "floating-heart";
     heart.textContent = "\u2665";
 
-    const size = 12 + Math.random() * 20;
+    const size = 16 + Math.random() * 24;
     const duration = 12 + Math.random() * 16;
     const delay = -Math.random() * duration;
     const left = Math.random() * 100;
@@ -115,6 +249,16 @@ const createFloatingHearts = (count) => {
   }
 };
 
+const updateHeartControls = () => {
+  if (!heartsContainer) return;
+  if (brightnessSlider) {
+    heartsContainer.style.setProperty("--heart-opacity", brightnessSlider.value);
+  }
+  if (speedSlider) {
+    heartsContainer.style.setProperty("--heart-speed", speedSlider.value);
+  }
+};
+
 const getHeartCount = () => (window.innerWidth <= 600 ? 16 : 28);
 
 const refreshHearts = () => {
@@ -124,29 +268,10 @@ const refreshHearts = () => {
 
 refreshHearts();
 
-const updateHeartControls = () => {
-  if (!heartsContainer) return;
-  if (brightnessSlider) {
-    heartsContainer.style.setProperty("--heart-opacity", brightnessSlider.value);
-  }
-  if (brightnessBoostSlider) {
-    heartsContainer.style.setProperty(
-      "--heart-brightness",
-      brightnessBoostSlider.value
-    );
-  }
-  if (speedSlider) {
-    heartsContainer.style.setProperty("--heart-speed", speedSlider.value);
-  }
-};
-
 if (brightnessSlider) {
   brightnessSlider.addEventListener("input", updateHeartControls);
 }
 
-if (brightnessBoostSlider) {
-  brightnessBoostSlider.addEventListener("input", updateHeartControls);
-}
 
 if (speedSlider) {
   speedSlider.addEventListener("input", updateHeartControls);
@@ -158,6 +283,12 @@ if (heartToggle) {
   });
 }
 
+if (heartClose) {
+  heartClose.addEventListener("click", () => {
+    heartClose.closest(".heart-controls")?.classList.add("is-collapsed");
+  });
+}
+
 updateHeartControls();
 
 const unlockPage = () => {
@@ -165,6 +296,13 @@ const unlockPage = () => {
   gate?.classList.add("is-hidden");
   celebration?.classList.add("is-visible");
   createFloatingHearts(64);
+
+  try {
+    const payload = { unlockedAt: Date.now() };
+    localStorage.setItem(unlockCacheKey, JSON.stringify(payload));
+  } catch (error) {
+    // Ignore storage errors (private mode, blocked storage, etc.)
+  }
 
   window.setTimeout(() => {
     document.body.classList.remove("is-celebrating");
@@ -174,23 +312,55 @@ const unlockPage = () => {
   }, celebrationDuration);
 };
 
+const shouldAutoUnlock = () => {
+  try {
+    const raw = localStorage.getItem(unlockCacheKey);
+    if (!raw) return false;
+    const parsed = JSON.parse(raw);
+    if (!parsed?.unlockedAt) return false;
+    return Date.now() - parsed.unlockedAt < unlockTtlMs;
+  } catch (error) {
+    return false;
+  }
+};
+
+const isValidDate = ({ year, month, day }) => {
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return (
+    date.getUTCFullYear() === year &&
+    date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day
+  );
+};
+
 const parseDateParts = (value) => {
   if (!value) return null;
   const trimmed = value.trim();
 
   if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
     const [year, month, day] = trimmed.split("-").map(Number);
-    return { year, month, day };
+    return isValidDate({ year, month, day }) ? { year, month, day } : null;
   }
 
   if (/^\d{2}[./-]\d{2}[./-]\d{4}$/.test(trimmed)) {
-    const [day, month, year] = trimmed.split(/[./-]/).map(Number);
-    return { year, month, day };
+    const [partA, partB, year] = trimmed.split(/[./-]/).map(Number);
+    let day = partA;
+    let month = partB;
+
+    if (partA <= 12 && partB <= 12) {
+      month = partA;
+      day = partB;
+    } else if (partB > 12) {
+      month = partA;
+      day = partB;
+    }
+
+    return isValidDate({ year, month, day }) ? { year, month, day } : null;
   }
 
   if (/^\d{4}[./-]\d{2}[./-]\d{2}$/.test(trimmed)) {
     const [year, month, day] = trimmed.split(/[./-]/).map(Number);
-    return { year, month, day };
+    return isValidDate({ year, month, day }) ? { year, month, day } : null;
   }
 
   return null;
@@ -219,7 +389,9 @@ if (gateForm) {
     const parts = partsFromText || partsFromPicker;
 
     if (!parts) {
-      if (gateError) gateError.textContent = "Ivesk data (YYYY-MM-DD).";
+      if (gateError) {
+        gateError.textContent = "Ivesk data (YYYY-MM-DD arba 31.07.2025).";
+      }
       return;
     }
 
@@ -230,6 +402,11 @@ if (gateForm) {
       gateError.textContent = "Netinkama data. Pabandyk dar.";
     }
   });
+}
+
+if (shouldAutoUnlock()) {
+  gate?.classList.add("is-hidden");
+  document.body.classList.remove("is-locked");
 }
 
 window.addEventListener("resize", () => {
