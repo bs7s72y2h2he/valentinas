@@ -1152,7 +1152,7 @@ h2 {
   .gallery__grid img {
     aspect-ratio: auto;
     object-fit: contain;
-    max-height: 220px;
+    max-height: 200px;
     background: #fff9f2;
   }
 
@@ -1168,7 +1168,9 @@ h2 {
   .memory-box img {
     opacity: 1;
     transform: none;
-    max-height: 220px;
+    max-height: 200px;
+    object-fit: contain;
+    background: #fff9f2;
   }
 
   .note {
@@ -1236,7 +1238,9 @@ h2 {
 .is-touch .memory-box img {
   opacity: 1;
   transform: none;
-  max-height: 240px;
+  max-height: 200px;
+  object-fit: contain;
+  background: #fff9f2;
 }
 
 @media (max-width: 420px) {
