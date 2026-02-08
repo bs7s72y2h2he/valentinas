@@ -35,6 +35,18 @@ const unlockTtlMs = 10 * 60 * 1000;
 const scratchRadius = 18;
 let audioContext;
 
+const setGateInputMode = () => {
+  if (!gateDateInput) return;
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (isMobile) {
+    gateDateInput.setAttribute("type", "text");
+    gateDateInput.removeAttribute("inputmode");
+  } else {
+    gateDateInput.setAttribute("type", "text");
+    gateDateInput.setAttribute("inputmode", "numeric");
+  }
+};
+
 const playRevealSound = () => {
   try {
     if (!audioContext) {
@@ -290,6 +302,8 @@ if (heartClose) {
 }
 
 updateHeartControls();
+
+setGateInputMode();
 
 const unlockPage = () => {
   document.body.classList.add("is-celebrating");
