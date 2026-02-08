@@ -187,20 +187,6 @@ const setCardsExpanded = (isExpanded) => {
   }
 };
 
-const attachCardExpandHandler = (card) => {
-  card.addEventListener("click", (event) => {
-    if (!mobileCardMedia.matches) return;
-    if (!card.classList.contains("card--collapsed")) return;
-    event.preventDefault();
-    event.stopPropagation();
-    document.querySelectorAll(".card").forEach((otherCard) => {
-      if (otherCard !== card && !otherCard.classList.contains("is-revealed")) {
-        setCardCollapsed(otherCard, true);
-      }
-    });
-    setCardCollapsed(card, false);
-  });
-};
 
 const setupScratchCanvas = (card, canvas) => {
   const context = canvas.getContext("2d", { willReadFrequently: true });
@@ -369,7 +355,6 @@ const renderCards = (data) => {
     if (canvas) {
       setupScratchCanvas(card, canvas);
     }
-    attachCardExpandHandler(card);
   });
 };
 
@@ -653,12 +638,5 @@ if (shouldAutoUnlock()) {
 
 window.addEventListener("resize", () => {
   refreshHearts();
-  document.querySelectorAll(".card").forEach((card) => {
-    const shouldCollapse = mobileCardMedia.matches && !card.classList.contains("is-revealed");
-    setCardCollapsed(card, shouldCollapse);
-  });
-  if (mobileCardMedia.matches) {
-    setCardsExpanded(false);
-  }
   updateInputModeClass();
 });
