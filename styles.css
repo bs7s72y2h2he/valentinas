@@ -1153,7 +1153,7 @@ h2 {
     aspect-ratio: auto;
     object-fit: contain;
     max-height: 200px;
-    background: #fff9f2;
+    background: transparent;
   }
 
   .memory-box {
@@ -1170,7 +1170,7 @@ h2 {
     transform: none;
     max-height: 200px;
     object-fit: contain;
-    background: #fff9f2;
+    background: transparent;
   }
 
   .note {
@@ -1240,7 +1240,7 @@ h2 {
   transform: none;
   max-height: 200px;
   object-fit: contain;
-  background: #fff9f2;
+  background: transparent;
 }
 
 @media (max-width: 420px) {
