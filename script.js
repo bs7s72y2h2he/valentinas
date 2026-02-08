@@ -393,15 +393,18 @@ if (gateForm) {
       : null;
 
     const parts = partsFromText || partsFromPicker;
+    const digits = gateDateInput.value.replace(/\D/g, "");
+    const matchesByDigits =
+      digits === "20250731" || digits === "31072025" || digits === "07312025";
 
-    if (!parts) {
+    if (!parts && !matchesByDigits) {
       if (gateError) {
         gateError.textContent = "Ivesk data (YYYY-MM-DD arba 31.07.2025).";
       }
       return;
     }
 
-    if (matchesTargetDate(parts)) {
+    if (matchesByDigits || matchesTargetDate(parts)) {
       if (gateError) gateError.textContent = "";
       unlockPage();
     } else if (gateError) {
