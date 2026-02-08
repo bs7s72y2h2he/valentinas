@@ -1237,6 +1237,12 @@ h2 {
     justify-items: stretch;
   }
 
+  .cards__grid,
+  .card,
+  .card__scratch {
+    touch-action: pan-y;
+  }
+
   .heart-controls {
     top: auto;
     right: 1rem;
