@@ -683,6 +683,20 @@ h2 {
   gap: 2.5rem;
 }
 
+.cards__toggle {
+  display: none;
+  justify-self: start;
+}
+
+.cards--collapsed {
+  gap: 1.25rem;
+}
+
+.cards--collapsed .cards__grid,
+.cards--collapsed .score {
+  display: none;
+}
+
 .cards__grid {
   display: grid;
   gap: 1.5rem;
@@ -1020,6 +1034,10 @@ h2 {
   .button {
     width: 100%;
     text-align: center;
+  }
+
+  .cards__toggle {
+    display: inline-flex;
   }
 
   .heart-controls {

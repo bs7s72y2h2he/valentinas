@@ -16,6 +16,8 @@ const cardsData = [
 const cardsGrid = document.getElementById("cards-grid");
 const scoreValue = document.getElementById("score-value");
 const shuffleButton = document.getElementById("shuffle-cards");
+const cardsToggle = document.getElementById("cards-toggle");
+const cardsSection = document.querySelector(".cards");
 const heartsContainer = document.querySelector(".background-hearts");
 const brightnessSlider = document.getElementById("heart-brightness");
 const speedSlider = document.getElementById("heart-speed");
@@ -113,6 +115,22 @@ const setCardCollapsed = (card, shouldCollapse) => {
   } else {
     card.classList.remove("card--collapsed");
     card.setAttribute("aria-expanded", "true");
+  }
+};
+
+const setCardsExpanded = (isExpanded) => {
+  if (!cardsSection) return;
+  cardsSection.classList.toggle("cards--collapsed", !isExpanded);
+  if (cardsToggle) {
+    cardsToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+    cardsToggle.textContent = isExpanded ? "Slepti korteles" : "Iskleisti korteles";
+  }
+  if (mobileCardMedia.matches && !isExpanded) {
+    document.querySelectorAll(".card").forEach((card) => {
+      if (!card.classList.contains("is-revealed")) {
+        setCardCollapsed(card, true);
+      }
+    });
   }
 };
 
@@ -314,7 +332,17 @@ const shuffleCards = () => {
 
 shuffleButton.addEventListener("click", shuffleCards);
 
+if (cardsToggle) {
+  cardsToggle.addEventListener("click", () => {
+    if (!mobileCardMedia.matches) return;
+    const isExpanded = !cardsSection?.classList.contains("cards--collapsed");
+    setCardsExpanded(!isExpanded);
+  });
+}
+
 renderCards(cardsData);
+
+setCardsExpanded(!mobileCardMedia.matches);
 
 document.querySelectorAll(".memory-box").forEach((box) => {
   const lid = box.querySelector(".memory-box__lid");
@@ -559,4 +587,5 @@ window.addEventListener("resize", () => {
     const shouldCollapse = mobileCardMedia.matches && !card.classList.contains("is-revealed");
     setCardCollapsed(card, shouldCollapse);
   });
+  setCardsExpanded(!mobileCardMedia.matches || cardsSection?.classList.contains("cards--collapsed") === false);
 });
