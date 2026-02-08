@@ -19,15 +19,15 @@
         <p class="gate__eyebrow">Slaptas iejimas</p>
         <h2>Ivesk musu susipazinimo data</h2>
         <p class="gate__lead">Tik teisinga data atrakina si puslapi.</p>
-        <form class="gate__form" id="gate-form">
+        <form class="gate__form" id="gate-form" novalidate>
           <label class="gate__label" for="gate-date">Data</label>
           <input
             id="gate-date"
-            type="text"
-            required
+            type="tel"
             inputmode="numeric"
             placeholder="2025-07-31"
             autocomplete="off"
+            autocorrect="off"
           />
           <button class="button" type="submit">Atidaryti</button>
           <p class="gate__error" id="gate-error" role="status" aria-live="polite"></p>
