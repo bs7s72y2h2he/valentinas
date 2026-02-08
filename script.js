@@ -29,7 +29,7 @@ const gateError = document.getElementById("gate-error");
 const celebration = document.getElementById("celebration");
 
 let score = 0;
-const targetDate = "2025-07-31";
+const targetDate = { year: 2025, month: 7, day: 31 };
 const celebrationDuration = 2200;
 
 const createCard = (text) => {
@@ -174,23 +174,60 @@ const unlockPage = () => {
   }, celebrationDuration);
 };
 
+const parseDateParts = (value) => {
+  if (!value) return null;
+  const trimmed = value.trim();
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const [year, month, day] = trimmed.split("-").map(Number);
+    return { year, month, day };
+  }
+
+  if (/^\d{2}[./-]\d{2}[./-]\d{4}$/.test(trimmed)) {
+    const [day, month, year] = trimmed.split(/[./-]/).map(Number);
+    return { year, month, day };
+  }
+
+  if (/^\d{4}[./-]\d{2}[./-]\d{2}$/.test(trimmed)) {
+    const [year, month, day] = trimmed.split(/[./-]/).map(Number);
+    return { year, month, day };
+  }
+
+  return null;
+};
+
+const matchesTargetDate = (parts) =>
+  parts &&
+  parts.year === targetDate.year &&
+  parts.month === targetDate.month &&
+  parts.day === targetDate.day;
+
 if (gateForm) {
   gateForm.addEventListener("submit", (event) => {
     event.preventDefault();
     if (!gateDateInput) return;
 
-    if (!gateDateInput.value) {
-      if (gateError) gateError.textContent = "Ivesk data.";
+    const partsFromText = parseDateParts(gateDateInput.value);
+    const partsFromPicker = gateDateInput.valueAsDate
+      ? {
+          year: gateDateInput.valueAsDate.getUTCFullYear(),
+          month: gateDateInput.valueAsDate.getUTCMonth() + 1,
+          day: gateDateInput.valueAsDate.getUTCDate()
+        }
+      : null;
+
+    const parts = partsFromText || partsFromPicker;
+
+    if (!parts) {
+      if (gateError) gateError.textContent = "Ivesk data (YYYY-MM-DD).";
       return;
     }
 
-    if (gateDateInput.value === targetDate) {
+    if (matchesTargetDate(parts)) {
       if (gateError) gateError.textContent = "";
       unlockPage();
-    } else {
-      if (gateError) {
-        gateError.textContent = "Netinkama data. Pabandyk dar.";
-      }
+    } else if (gateError) {
+      gateError.textContent = "Netinkama data. Pabandyk dar.";
     }
   });
 }
