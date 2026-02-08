@@ -304,25 +304,35 @@ const setupScratchCanvas = (card, canvas) => {
     checkReveal();
   };
 
+  let touchStartX = 0;
+  let touchStartY = 0;
+
   const startTouch = (event) => {
-    event.preventDefault();
     if (!event.touches?.length) return;
+    const touch = event.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
     isDrawing = true;
     isTouchScratching = true;
-    const touch = event.touches[0];
     scratchAtPoint(touch.clientX, touch.clientY);
   };
 
   const moveTouch = (event) => {
-    event.preventDefault();
     if (!isDrawing || !event.touches?.length) return;
     const touch = event.touches[0];
+    const deltaX = Math.abs(touch.clientX - touchStartX);
+    const deltaY = Math.abs(touch.clientY - touchStartY);
+    if (deltaY > deltaX + 6) {
+      isDrawing = false;
+      isTouchScratching = false;
+      return;
+    }
+    event.preventDefault();
     scratchAtPoint(touch.clientX, touch.clientY);
     scheduleRevealCheck();
   };
 
-  const endTouch = (event) => {
-    event.preventDefault();
+  const endTouch = () => {
     if (!isDrawing) return;
     isDrawing = false;
     isTouchScratching = false;
