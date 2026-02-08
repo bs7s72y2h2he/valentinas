@@ -1,4 +1,56 @@
 @media (max-width: 600px) {
+  .envelope-row {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .envelope-btn {
+    width: 90px;
+    height: 65px;
+    background: none !important;
+    box-shadow: 0 0 12px 0 rgba(233, 79, 122, 0.18);
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .envelope-graphic {
+    width: 90px !important;
+    height: 65px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    display: block;
+  }
+  .envelope-flap-v,
+  .envelope-flap-v2,
+  .envelope-body {
+    width: 90px !important;
+    height: 28px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    display: block;
+  }
+  .envelope-flap-v2 {
+    top: 14px !important;
+  }
+  .envelope-body {
+    height: 37px !important;
+    top: 18px !important;
+  }
+  .envelope-ribbon {
+    width: 50px !important;
+    left: 8px !important;
+    top: 32px !important;
+    height: 5px !important;
+  }
+  .envelope-bow {
+    width: 12px !important;
+    height: 7px !important;
+    top: 36px !important;
+  }
+}
+@media (max-width: 600px) {
   .gate__card {
     max-width: 98vw;
     padding: 1.1rem 0.2rem 1.3rem 0.2rem;
