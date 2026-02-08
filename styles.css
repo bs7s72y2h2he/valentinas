@@ -743,6 +743,19 @@ h2 {
   transition: transform 0.6s ease, opacity 0.6s ease;
 }
 
+.card__hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: rgba(127, 36, 56, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
 .card__scratch {
   position: absolute;
   inset: 0;
@@ -752,6 +765,19 @@ h2 {
   cursor: pointer;
   transition: opacity 0.3s ease;
   touch-action: none;
+}
+
+.card.card--collapsed .card__content {
+  opacity: 0;
+}
+
+.card.card--collapsed .card__scratch {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.card.card--collapsed .card__hint {
+  opacity: 0.85;
 }
 
 .card.is-revealed .card__scratch {
@@ -890,6 +916,11 @@ h2 {
   .background-hearts {
     filter: blur(3px) brightness(1.2);
     opacity: 0.6;
+  }
+
+  .card.card--collapsed {
+    min-height: 120px;
+    padding: 1rem;
   }
 }
 

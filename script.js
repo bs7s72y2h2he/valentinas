@@ -1,16 +1,16 @@
 const cardsData = [
-  "Tavo sypsena padaro diena sviesesne",
-  "Tu moki nusijuokti is smulkmenu",
-  "Tavo apkabinimai yra mano ramybe",
-  "Tu kuri musu saugia erdve",
+  "Tavo šypsena padaro diena šviesesne",
+  "Tu moki nusijuokti iš smulkmenų",
+  "Tavo apkabinimai yra mano ramybė",
+  "Tu kuri mūsų saugią erdvę",
   "Su tavimi viskas tampa nuotykis",
-  "Tavo akys pasako daugiau nei zodziai",
-  "Tu visada pastebi mazus dalykus",
-  "Tu moki klausytis ir girdeti",
-  "Tu esi mano drasa",
-  "Tu esi mano ramybe",
-  "Tu esi mano megstamiausias zmogus",
-  "Tu esi mano siandien ir rytoj"
+  "Tavo akys pasako daugiau nei žodžiai",
+  "Tu visada pastebi mažus dalykus",
+  "Tu moki klausytis ir girdėti",
+  "Tu esi mano drąsa",
+  "Tu esi mano ramybė",
+  "Tu esi mano mėgstamiausias žmogus",
+  "Tu esi mano šiandien ir rytoj"
 ];
 
 const cardsGrid = document.getElementById("cards-grid");
@@ -26,6 +26,7 @@ const gateForm = document.getElementById("gate-form");
 const gateDateInput = document.getElementById("gate-date");
 const gateError = document.getElementById("gate-error");
 const celebration = document.getElementById("celebration");
+const mobileCardMedia = window.matchMedia("(max-width: 600px)");
 
 let score = 0;
 const targetDate = { year: 2025, month: 7, day: 31 };
@@ -84,18 +85,48 @@ const createCard = (text) => {
   card.className = "card";
   card.setAttribute("role", "button");
   card.setAttribute("aria-label", "Nutrinti kortele");
+  card.setAttribute("aria-expanded", "true");
 
   const content = document.createElement("div");
   content.className = "card__content";
   content.textContent = text;
 
+  const hint = document.createElement("div");
+  hint.className = "card__hint";
+  hint.textContent = "Paliesk, kad atidarytum";
+
   const canvas = document.createElement("canvas");
   canvas.className = "card__scratch";
   canvas.setAttribute("aria-hidden", "true");
 
-  card.append(content, canvas);
+  card.append(content, hint, canvas);
 
   return card;
+};
+
+const setCardCollapsed = (card, shouldCollapse) => {
+  if (shouldCollapse) {
+    card.classList.add("card--collapsed");
+    card.setAttribute("aria-expanded", "false");
+  } else {
+    card.classList.remove("card--collapsed");
+    card.setAttribute("aria-expanded", "true");
+  }
+};
+
+const attachCardExpandHandler = (card) => {
+  card.addEventListener("click", (event) => {
+    if (!mobileCardMedia.matches) return;
+    if (!card.classList.contains("card--collapsed")) return;
+    event.preventDefault();
+    event.stopPropagation();
+    document.querySelectorAll(".card").forEach((otherCard) => {
+      if (otherCard !== card && !otherCard.classList.contains("is-revealed")) {
+        setCardCollapsed(otherCard, true);
+      }
+    });
+    setCardCollapsed(card, false);
+  });
 };
 
 const setupScratchCanvas = (card, canvas) => {
@@ -263,6 +294,10 @@ const renderCards = (data) => {
     const canvas = card.querySelector(".card__scratch");
     if (canvas) {
       setupScratchCanvas(card, canvas);
+    }
+    attachCardExpandHandler(card);
+    if (mobileCardMedia.matches) {
+      setCardCollapsed(card, !card.classList.contains("is-revealed"));
     }
   });
 };
@@ -503,4 +538,8 @@ if (shouldAutoUnlock()) {
 
 window.addEventListener("resize", () => {
   refreshHearts();
+  document.querySelectorAll(".card").forEach((card) => {
+    const shouldCollapse = mobileCardMedia.matches && !card.classList.contains("is-revealed");
+    setCardCollapsed(card, shouldCollapse);
+  });
 });
