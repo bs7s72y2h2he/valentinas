@@ -281,7 +281,8 @@ renderCards(cardsData);
 
 document.querySelectorAll(".memory-box").forEach((box) => {
   const lid = box.querySelector(".memory-box__lid");
-  lid?.addEventListener("click", () => {
+  lid?.addEventListener("click", (event) => {
+    event.preventDefault();
     box.classList.toggle("is-open");
   });
 });

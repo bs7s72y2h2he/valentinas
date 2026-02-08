@@ -20,6 +20,7 @@ body {
   background: radial-gradient(circle at top, #fff7ef 0%, #fde4d1 45%, #f9c8b9 100%);
   color: var(--choco);
   min-height: 100vh;
+  min-height: 100svh;
   overflow-x: hidden;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -315,6 +316,8 @@ img {
   padding: 3.5rem clamp(1.5rem, 5vw, 5rem) 4rem;
   position: relative;
   z-index: 1;
+  width: min(1100px, 100%);
+  margin: 0 auto;
 }
 
 .is-locked .page,
@@ -489,6 +492,9 @@ h2 {
   box-shadow: none;
   border-radius: 18px;
   padding: 0;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .memory-box {
@@ -611,6 +617,8 @@ h2 {
   transform: translateY(14px) scale(0.98);
   transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s;
   z-index: 1;
+  width: 100%;
+  height: auto;
 }
 
 .memory-box__heart {
