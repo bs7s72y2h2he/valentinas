@@ -1149,6 +1149,13 @@ h2 {
     gap: 1.2rem;
   }
 
+  .gallery__grid img {
+    aspect-ratio: auto;
+    object-fit: contain;
+    max-height: 220px;
+    background: #fff9f2;
+  }
+
   .memory-box {
     padding: 1rem 0.9rem 1.2rem;
   }
@@ -1161,7 +1168,7 @@ h2 {
   .memory-box img {
     opacity: 1;
     transform: none;
-    max-height: 240px;
+    max-height: 220px;
   }
 
   .note {
