@@ -1258,16 +1258,14 @@ h2 {
   .days-counter {
     top: 1rem;
     right: 1rem;
-    padding: 0.75rem 0.85rem 0.8rem;
-    min-width: 0;
-    max-width: 11rem;
+    padding: 0.75rem 0.9rem 0.85rem;
+    min-width: 10.5rem;
+    max-width: none;
   }
 
   .days-counter__value {
-    font-size: 0.82rem;
-    line-height: 1.25;
-    white-space: normal;
-    word-break: break-word;
+    font-size: 0.9rem;
+    white-space: nowrap;
   }
 
 

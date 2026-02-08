@@ -176,6 +176,15 @@ const setCardsExpanded = (isExpanded) => {
     cardsToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
     cardsToggle.textContent = isExpanded ? "Slepti korteles" : "Iskleisti korteles";
   }
+  if (isExpanded) {
+    window.requestAnimationFrame(() => {
+      document.querySelectorAll(".card__scratch").forEach((canvas) => {
+        if (canvas.__redrawOverlay) {
+          canvas.__redrawOverlay();
+        }
+      });
+    });
+  }
 };
 
 const attachCardExpandHandler = (card) => {
@@ -236,6 +245,7 @@ const setupScratchCanvas = (card, canvas) => {
   };
 
   drawOverlay();
+  canvas.__redrawOverlay = drawOverlay;
 
   let isDrawing = false;
 
