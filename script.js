@@ -60,7 +60,7 @@ const updateDaysCounter = () => {
   const startDate = new Date(targetDate.year, targetDate.month - 1, targetDate.day);
   const now = new Date();
   if (now < startDate) {
-    daysCounterValue.textContent = "Kartu: 0 men. 0 d. 0 val. 0 sek.";
+    daysCounterValue.textContent = "Kartu: 0 men. 0 d. 0 val. 0 min. 0 sek.";
     return;
   }
 
@@ -76,9 +76,11 @@ const updateDaysCounter = () => {
   const diffMs = now.getTime() - anchor.getTime();
   const days = Math.floor(diffMs / 86400000);
   const hours = Math.floor((diffMs % 86400000) / 3600000);
-  const seconds = Math.floor((diffMs % 3600000) / 1000);
+  const minutes = Math.floor((diffMs % 3600000) / 60000);
+  const seconds = Math.floor((diffMs % 60000) / 1000);
+  const minutesLabel = String(minutes).padStart(2, "0");
   const secondsLabel = String(seconds).padStart(2, "0");
-  daysCounterValue.textContent = `Kartu: ${months} men. ${days} d. ${hours} val. ${secondsLabel} sek.`;
+  daysCounterValue.textContent = `Kartu: ${months} men. ${days} d. ${hours} val. ${minutesLabel} min. ${secondsLabel} sek.`;
 };
 
 
