@@ -336,34 +336,40 @@ const isValidDate = ({ year, month, day }) => {
 const parseDateParts = (value) => {
   if (!value) return null;
   const trimmed = value.trim();
+  if (!trimmed) return null;
 
-  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
-    const [year, month, day] = trimmed.split("-").map(Number);
-    return isValidDate({ year, month, day }) ? { year, month, day } : null;
-  }
+  const parts = trimmed.split(/\D+/).filter(Boolean);
+  if (parts.length !== 3) return null;
 
-  if (/^\d{2}[./-]\d{2}[./-]\d{4}$/.test(trimmed)) {
-    const [partA, partB, year] = trimmed.split(/[./-]/).map(Number);
-    let day = partA;
-    let month = partB;
+  const [first, second, third] = parts.map(Number);
+  if ([first, second, third].some((part) => Number.isNaN(part))) return null;
 
-    if (partA <= 12 && partB <= 12) {
-      month = partA;
-      day = partB;
-    } else if (partB > 12) {
-      month = partA;
-      day = partB;
+  let year;
+  let month;
+  let day;
+
+  if (parts[0].length === 4) {
+    year = first;
+    month = second;
+    day = third;
+  } else if (parts[2].length === 4) {
+    year = third;
+
+    if (first <= 12 && second <= 12) {
+      month = first;
+      day = second;
+    } else if (first > 12) {
+      day = first;
+      month = second;
+    } else {
+      day = first;
+      month = second;
     }
-
-    return isValidDate({ year, month, day }) ? { year, month, day } : null;
+  } else {
+    return null;
   }
 
-  if (/^\d{4}[./-]\d{2}[./-]\d{2}$/.test(trimmed)) {
-    const [year, month, day] = trimmed.split(/[./-]/).map(Number);
-    return isValidDate({ year, month, day }) ? { year, month, day } : null;
-  }
-
-  return null;
+  return isValidDate({ year, month, day }) ? { year, month, day } : null;
 };
 
 const matchesTargetDate = (parts) =>
