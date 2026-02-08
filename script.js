@@ -168,6 +168,7 @@ const setupScratchCanvas = (card, canvas) => {
   };
 
   const startScratch = (event) => {
+    event.preventDefault();
     isDrawing = true;
     canvas.setPointerCapture(event.pointerId);
     scratchAt(event);
@@ -183,22 +184,30 @@ const setupScratchCanvas = (card, canvas) => {
   };
 
   const moveScratch = (event) => {
+    event.preventDefault();
     if (!isDrawing) return;
     scratchAt(event);
     scheduleRevealCheck();
   };
 
   const endScratch = (event) => {
+    event.preventDefault();
     if (!isDrawing) return;
     isDrawing = false;
     canvas.releasePointerCapture(event.pointerId);
     checkReveal();
   };
 
-  canvas.addEventListener("pointerdown", startScratch);
-  canvas.addEventListener("pointermove", moveScratch);
-  canvas.addEventListener("pointerup", endScratch);
-  canvas.addEventListener("pointercancel", endScratch);
+  const passiveFalse = { passive: false };
+
+  canvas.addEventListener("pointerdown", startScratch, passiveFalse);
+  canvas.addEventListener("pointermove", moveScratch, passiveFalse);
+  canvas.addEventListener("pointerup", endScratch, passiveFalse);
+  canvas.addEventListener("pointercancel", endScratch, passiveFalse);
+
+  canvas.addEventListener("touchstart", startScratch, passiveFalse);
+  canvas.addEventListener("touchmove", moveScratch, passiveFalse);
+  canvas.addEventListener("touchend", endScratch, passiveFalse);
 
   window.addEventListener("resize", () => {
     if (!card.classList.contains("is-revealed")) {
