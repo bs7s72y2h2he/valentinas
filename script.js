@@ -1,3 +1,82 @@
+// Rožių žiedlapių generavimas
+function createPetal() {
+  const petalsContainer = document.getElementById('petals');
+  if (!petalsContainer) return;
+  const petal = document.createElement('div');
+  petal.className = 'petal';
+  // Atsitiktinė pozicija ir dydis
+  const left = Math.random() * 100;
+  const size = 22 + Math.random() * 18;
+  const duration = 7 + Math.random() * 4;
+  petal.style.left = left + 'vw';
+  petal.style.width = size + 'px';
+  petal.style.height = size + 'px';
+  petal.style.animationDuration = duration + 's';
+  // Atsitiktinė spalva ir pasukimas
+  const colors = ['#e94f7a', '#f36f7f', '#ffb6c1', '#c23a6d'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const rotate = -20 + Math.random() * 40;
+  petal.style.transform = `rotate(${rotate}deg)`;
+  // SVG žiedlapio forma
+  petal.innerHTML = `<svg viewBox="0 0 32 32" fill="${color}" xmlns="http://www.w3.org/2000/svg"><path d="M16 2c-2.5 2.5-7.5 10-7.5 15.5S13.5 30 16 30s7.5-7.5 7.5-12.5S18.5 4.5 16 2z"/></svg>`;
+  petalsContainer.appendChild(petal);
+  setTimeout(() => {
+    petal.remove();
+  }, duration * 1000);
+}
+
+let petalsInterval = null;
+function startPetals() {
+  if (petalsInterval) return;
+  petalsInterval = setInterval(createPetal, 900);
+}
+function stopPetals() {
+  if (petalsInterval) {
+    clearInterval(petalsInterval);
+    petalsInterval = null;
+  }
+  const petalsContainer = document.getElementById('petals');
+  if (petalsContainer) petalsContainer.innerHTML = '';
+}
+
+// Plaukiojančių širdelių generavimas
+function createFloatingHeart() {
+  const heartsContainer = document.getElementById('floating-hearts');
+  if (!heartsContainer) return;
+  const heart = document.createElement('div');
+  heart.className = 'floating-heart';
+  // Atsitiktinė pozicija ir dydis
+  const left = Math.random() * 100;
+  const size = 24 + Math.random() * 24;
+  const duration = 6 + Math.random() * 3;
+  heart.style.left = left + 'vw';
+  heart.style.width = size + 'px';
+  heart.style.height = size + 'px';
+  heart.style.animationDuration = duration + 's';
+  // Atsitiktinė spalva
+  const colors = ['#e94f7a', '#f36f7f', '#ffb6c1', '#c23a6d'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  heart.innerHTML = `<svg viewBox="0 0 32 32" fill="${color}" xmlns="http://www.w3.org/2000/svg"><path d="M16 29s-9.7-7.2-12.7-12.1C-0.2 12.2 2.6 6.7 8.1 6.7c2.7 0 5.1 1.7 6.2 4.1C15.8 8.4 18.2 6.7 20.9 6.7c5.5 0 8.3 5.5 4.8 10.2C25.7 21.8 16 29 16 29z"/></svg>`;
+  heartsContainer.appendChild(heart);
+  setTimeout(() => {
+    heart.remove();
+  }, duration * 1000);
+}
+
+let heartsInterval = null;
+function startFloatingHearts() {
+  if (heartsInterval) return;
+  heartsInterval = setInterval(createFloatingHeart, 700);
+}
+function stopFloatingHearts() {
+  if (heartsInterval) {
+    clearInterval(heartsInterval);
+    heartsInterval = null;
+  }
+  const heartsContainer = document.getElementById('floating-hearts');
+  if (heartsContainer) heartsContainer.innerHTML = '';
+}
+
 const cardsData = [
   "Tavo šypsena padaro diena šviesesne",
   "Tu moki nusijuokti iš smulkmenų",
@@ -26,6 +105,42 @@ const gate = document.getElementById("gate");
 const gateForm = document.getElementById("gate-form");
 const gateDateInput = document.getElementById("gate-date");
 const gateError = document.getElementById("gate-error");
+const envelopeBtns = document.querySelectorAll('.envelope-btn');
+const envelopeMessage = document.getElementById('envelope-message');
+// 3 vokų pasirinkimo interaktyvumas
+const envelopeChoose = document.getElementById('envelope-choose');
+const gateFormWrap = document.getElementById('gate-form-wrap');
+if (envelopeBtns.length && envelopeMessage && gateFormWrap && envelopeChoose) {
+  gateFormWrap.style.display = "none";
+  const correct = Math.floor(Math.random() * 3);
+  let unlocked = false;
+  envelopeBtns.forEach((btn, idx) => {
+    btn.addEventListener('click', () => {
+      if (unlocked) return;
+      if (btn.classList.contains('correct') || btn.classList.contains('open')) return;
+      if (idx === correct) {
+        unlocked = true;
+        btn.classList.add('open');
+        setTimeout(() => {
+          btn.classList.add('correct');
+          envelopeMessage.textContent = "Teisingai! Radai Slapto Įėjimo Voką.😘";
+        }, 400);
+        setTimeout(() => {
+          envelopeChoose.style.display = "none";
+          gateFormWrap.style.display = "block";
+          startFloatingHearts();
+          startPetals();
+        }, 1200);
+      } else {
+        btn.classList.add('shake');
+        envelopeMessage.textContent = "Šiame voke nieko nėra. Pabandyk kitą!";
+        setTimeout(() => {
+          btn.classList.remove('shake');
+        }, 400);
+      }
+    });
+  });
+}
 const celebration = document.getElementById("celebration");
 const mobileCardMedia = window.matchMedia("(max-width: 600px)");
 const touchMedia = window.matchMedia("(hover: none) and (pointer: coarse)");
