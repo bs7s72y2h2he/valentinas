@@ -1,3 +1,12 @@
+// Preview puslapio logika
+const preview = document.getElementById('preview');
+const previewStartBtn = document.getElementById('preview-start');
+if (preview && previewStartBtn) {
+  previewStartBtn.addEventListener('click', () => {
+    preview.style.display = 'none';
+    document.getElementById('gate').style.display = 'block';
+  });
+}
 // Rožių žiedlapių generavimas
 function createPetal() {
   const petalsContainer = document.getElementById('petals');
