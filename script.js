@@ -1,12 +1,6 @@
 // Preview puslapio logika
-if (!window.previewModal) {
-  window.previewModal = document.getElementById('preview-modal');
-}
-if (!window.previewStartBtn) {
-  window.previewStartBtn = document.getElementById('preview-start');
-}
-const previewModal = window.previewModal;
-const previewStartBtn = window.previewStartBtn;
+const previewModal = document.getElementById('preview-modal');
+const previewStartBtn = document.getElementById('preview-start');
 // Tik preview.html rodyti modalą, pagrindiniame puslapyje ir/ar telefone - nerodyti
 function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
