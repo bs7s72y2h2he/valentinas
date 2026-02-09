@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      document.documentElement.classList.add("gate-preload");
+    </script>
+    <title>Slaptas įėjimas 💝</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&family=Space+Grotesk:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css?v=2" />
+  </head>
+  <body class="is-locked">
+    <div class="background-hearts" aria-hidden="true"></div>
+    <div class="days-counter" id="days-counter" aria-live="polite">
+      <span class="days-counter__label">Mūsų praleistas laikas kartu</span>
+      <span class="days-counter__value" id="days-counter-value"></span>
+    </div>
+    <div class="gate" id="gate" aria-label="Slaptas įėjimas" style="display:block;">
+      <div class="gate__card">
+        <div class="petals" id="petals"></div>
+        <div class="floating-hearts" id="floating-hearts"></div>
+        <div class="gate__lockup">
+          <div class="envelope-choose" id="envelope-choose">
+            <div class="envelope-hint">Vienas iš vokų saugo slaptą įėjimą į puslapį – surask jį! 🤩</div>
+            <div class="hearts-garland" aria-hidden="true">
+              <span class="garland-string"></span>
+              <span class="garland-heart" style="left:10%"><svg viewBox="0 0 24 24"><path fill="#e94f7a" d="M12 21s-7-5.2-9.2-8.7C-0.2 8.8 2.1 4.5 6.1 4.5c1.9 0 3.7 1.2 4.6 2.9C11.9 5.7 13.7 4.5 15.6 4.5c4 0 6.3 4.3 3.3 7.8C19 15.8 12 21 12 21z"/></svg></span>
+              <span class="garland-heart" style="left:30%"><svg viewBox="0 0 24 24"><path fill="#f36f7f" d="M12 21s-7-5.2-9.2-8.7C-0.2 8.8 2.1 4.5 6.1 4.5c1.9 0 3.7 1.2 4.6 2.9C11.9 5.7 13.7 4.5 15.6 4.5c4 0 6.3 4.3 3.3 7.8C19 15.8 12 21 12 21z"/></svg></span>
+              <span class="garland-heart" style="left:50%"><svg viewBox="0 0 24 24"><path fill="#ffb6c1" d="M12 21s-7-5.2-9.2-8.7C-0.2 8.8 2.1 4.5 6.1 4.5c1.9 0 3.7 1.2 4.6 2.9C11.9 5.7 13.7 4.5 15.6 4.5c4 0 6.3 4.3 3.3 7.8C19 15.8 12 21 12 21z"/></svg></span>
+              <span class="garland-heart" style="left:70%"><svg viewBox="0 0 24 24"><path fill="#e94f7a" d="M12 21s-7-5.2-9.2-8.7C-0.2 8.8 2.1 4.5 6.1 4.5c1.9 0 3.7 1.2 4.6 2.9C11.9 5.7 13.7 4.5 15.6 4.5c4 0 6.3 4.3 3.3 7.8C19 15.8 12 21 12 21z"/></svg></span>
+              <span class="garland-heart" style="left:90%"><svg viewBox="0 0 24 24"><path fill="#c23a6d" d="M12 21s-7-5.2-9.2-8.7C-0.2 8.8 2.1 4.5 6.1 4.5c1.9 0 3.7 1.2 4.6 2.9C11.9 5.7 13.7 4.5 15.6 4.5c4 0 6.3 4.3 3.3 7.8C19 15.8 12 21 12 21z"/></svg></span>
+            </div>
+            <div class="envelope-row">
+              <button class="envelope-btn" data-envelope="0" aria-label="Vokas 1">
+                <span class="envelope-graphic envelope-graphic--fancy">
+                  <span class="envelope-flap-v"></span>
+                  <span class="envelope-flap-v2"></span>
+                  <span class="envelope-body"></span>
+                  <span class="envelope-ribbon"></span>
+                  <span class="envelope-bow"></span>
+                </span>
+              </button>
+              <button class="envelope-btn" data-envelope="1" aria-label="Vokas 2">
+                <span class="envelope-graphic envelope-graphic--fancy">
+                  <span class="envelope-flap-v"></span>
+                  <span class="envelope-flap-v2"></span>
+                  <span class="envelope-body"></span>
+                  <span class="envelope-ribbon"></span>
+                  <span class="envelope-bow"></span>
+                </span>
+              </button>
+              <button class="envelope-btn" data-envelope="2" aria-label="Vokas 3">
+                <span class="envelope-graphic envelope-graphic--fancy">
+                  <span class="envelope-flap-v"></span>
+                  <span class="envelope-flap-v2"></span>
+                  <span class="envelope-body"></span>
+                  <span class="envelope-ribbon"></span>
+                  <span class="envelope-bow"></span>
+                </span>
+              </button>
+            </div>
+            <div class="envelope-message" id="envelope-message"></div>
+          </div>
+          <div class="gate-form-wrap" id="gate-form-wrap" style="display:none;">
+            <div class="pulsing-heart-wrap">
+              <svg class="pulsing-heart" viewBox="0 0 32 32" fill="#e94f7a" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 29s-9.7-7.2-12.7-12.1C-0.2 12.2 2.6 6.7 8.1 6.7c2.7 0 5.1 1.7 6.2 4.1C15.8 8.4 18.2 6.7 20.9 6.7c5.5 0 8.3 5.5 4.8 10.2C25.7 21.8 16 29 16 29z"/>
+              </svg>
+            </div>
+            <p class="gate__eyebrow">Slaptas įėjimas</p>
+            <h2>Įvesk mūsų susipažinimo datą</h2>
+            <p class="gate__lead"></p>
+            <p class="gate__lead">Tik teisinga data atrakina šį puslapį.</p>
+            <form class="gate__form" id="gate-form" novalidate>
+              <label class="gate__label" for="gate-date"></label>
+              <input
+                id="gate-date"
+                type="text"
+                placeholder="Įvesk datą"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+              />
+              <button class="button" type="submit">Spausk čia, kad atrakintum</button>
+              <p class="gate__error" id="gate-error" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <p>Pagaminta su meile. Sukurta tik tau.♥</p>
+    </footer>
+    <script src="./script.js"></script>
+  </body>
+</html>
