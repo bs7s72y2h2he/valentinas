@@ -29,10 +29,10 @@
         <p>Ši svetainė skirta tik tau. Pasiruošk siurprizui ir paspausk „Pradėti“.</p>
         <button class="button" id="preview-start">Pradėti</button>
         <script>
-          // Po 4 sekundžių automatiškai peradresuoja į gate.html
-          setTimeout(function() {
+          // Nukreipimas tik paspaudus mygtuką
+          document.getElementById('preview-start').addEventListener('click', function() {
             window.location.href = 'gate.html';
-          }, 4000);
+          });
         </script>
       </div>
     </div>
