@@ -1,3 +1,62 @@
+/* Responsyvus dizainas mobiliesiems */
+@media (max-width: 700px) {
+  body {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+  }
+  .page, main.page {
+    padding: 0 4vw;
+  }
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2vw 0;
+  }
+  .hero__content {
+    margin-bottom: 2vw;
+  }
+  .hero__photo img {
+    width: 90vw;
+    max-width: 320px;
+    height: auto;
+    border-radius: 18px;
+    margin: 0 auto;
+    display: block;
+  }
+  .cards__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .gallery__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .memory-box img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  .button, .cards__toggle, .back-btn {
+    font-size: 1.1em;
+    padding: 14px 0;
+    width: 100%;
+    margin-bottom: 10px;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .section-title, .footer, .days-counter {
+    text-align: center;
+  }
+  .note__content {
+    padding: 2vw 0;
+  }
+  .envelope {
+    max-width: 95vw;
+    margin: 0 auto;
+  }
+}
 /* Modal preview langas su overlay */
 .preview-modal {
   position: fixed;
