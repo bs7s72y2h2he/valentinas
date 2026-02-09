@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="lt">
   <head>
+        <script>
+          // Peradresavimas į preview.html, jei atidaromas šakninis URL
+          if (window.location.pathname === '/' || window.location.pathname === '/valentinas/' || window.location.pathname === '/valentinas') {
+            window.location.replace(window.location.origin + window.location.pathname + 'preview.html');
+          }
+        </script>
     <meta charset="UTF-8" />
     <!-- Pašalintas automatinis peradresavimas į preview.html -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
