@@ -1006,11 +1006,13 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
+
 .gate {
   position: fixed;
   inset: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: radial-gradient(
     circle at top,
     rgba(255, 234, 233, 0.92) 0%,
@@ -1031,16 +1033,31 @@ textarea:focus-visible {
 
 .gate__card {
   width: 100%;
-  max-width: 650px;
-  background: none !important;
+  max-width: 420px;
+  background: #fff9f2;
   border-radius: 28px;
-  padding: 2.5rem 1.2rem 2.5rem 1.2rem;
-  box-shadow: none !important;
+  padding: 2.2rem 1.2rem 2.2rem 1.2rem;
+  box-shadow: 0 12px 32px rgba(61, 27, 36, 0.12);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.2rem;
   text-align: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .gate {
+    align-items: flex-start;
+    padding: 0.5rem;
+  }
+  .gate__card {
+    max-width: 98vw;
+    padding: 1.1rem 0.2rem 1.1rem 0.2rem;
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(61,27,36,0.10);
+    margin: 8vw auto 0 auto;
+  }
 }
 
 .gate__eyebrow {

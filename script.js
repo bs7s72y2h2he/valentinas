@@ -6,18 +6,13 @@ function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 if (previewModal && previewStartBtn) {
-  // Rodyti modalą tik pirmą kartą per sesiją
+  // Visada rodyti modalą preview.html, o paspaudus Pradėti – visada redirect į gate.html
   if (window.location.pathname.includes('preview')) {
-    if (!sessionStorage.getItem('previewModalClosed')) {
-      previewModal.style.display = 'flex';
-      document.getElementById('gate').style.display = 'none';
-      previewStartBtn.addEventListener('click', () => {
-        sessionStorage.setItem('previewModalClosed', 'true');
-        window.location.href = 'gate.html';
-      });
-    } else {
-      previewModal.style.display = 'none';
-    }
+    previewModal.style.display = 'flex';
+    document.getElementById('gate').style.display = 'none';
+    previewStartBtn.addEventListener('click', () => {
+      window.location.href = 'gate.html';
+    });
   } else {
     previewModal.style.display = 'none';
   }
