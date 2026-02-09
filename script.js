@@ -17,6 +17,8 @@ if (previewModal && previewStartBtn) {
     document.getElementById('gate').style.display = 'block';
   });
 }
+
+
 // Rožių žiedlapių generavimas
 function createPetal() {
   const petalsContainer = document.getElementById('petals');
