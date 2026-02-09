@@ -599,26 +599,13 @@ updateHeartControls();
 setGateInputMode();
 
 const unlockPage = () => {
-  document.body.classList.add("is-celebrating");
-  gate?.classList.add("is-hidden");
-  celebration?.classList.add("is-visible");
-  createFloatingHearts(64);
-
-  try {
-    const payload = { unlockedAt: Date.now() };
-    localStorage.setItem(unlockCacheKey, JSON.stringify(payload));
-  } catch (error) {
-    // Ignore storage errors (private mode, blocked storage, etc.)
+  document.body.classList.remove("is-locked");
+  const celebration = document.getElementById("celebration");
+  if (celebration) {
+    celebration.style.display = "block";
+    celebration.scrollIntoView({behavior:'smooth'});
   }
-
-  window.setTimeout(() => {
-    document.body.classList.remove("is-celebrating");
-    document.body.classList.remove("is-locked");
-    celebration?.classList.remove("is-visible");
-    refreshHearts();
-    // Automatinis peradresavimas į index.html po šventės animacijos
-    window.location.href = 'index.html';
-  }, celebrationDuration);
+  // ...existing unlock logika...
 };
 
 const shouldAutoUnlock = () => {
