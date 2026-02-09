@@ -1,119 +1,141 @@
 (function() {
     // Declare index page variables at top scope
     var cardsGrid, scoreValue, cardsToggle, cardsSection, heartsContainer, brightnessSlider, speedSlider, heartToggle, heartClose;
-  // Preview modalas tik preview.html, gate logika tik gate.html
-  const previewModal = document.getElementById('preview-modal');
-  const previewStartBtn = document.getElementById('preview-start');
-  if (window.location.pathname.includes('preview')) {
-    if (previewModal && previewStartBtn) {
-      previewModal.style.display = 'flex';
-      previewStartBtn.addEventListener('click', function() {
-        window.location.href = 'gate.html';
-      });
-    }
-  }
-
-  // Gate logika tik gate.html
-  var gateForm = null, gateError = null;
-  if (window.location.pathname.includes('gate')) {
-    gateForm = document.getElementById('gate-form');
-    gateError = document.getElementById('gate-error');
-    if (gateForm && gateError) {
-      gateForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const input = document.getElementById('gate-date');
-        const value = input ? input.value.trim() : '';
-        // Pakeiskite į teisingą datą (pvz. '2021-02-14' arba kita forma)
-        const correct = ['2021-02-14', '14-02-2021', '14/02/2021', '2021/02/14', '2021.02.14', '2021 02 14', '14 02 2021'];
-        if (correct.includes(value)) {
-          // Sėkmingai atrakinta, redirect į index.html
-          window.location.href = 'index.html';
-        } else {
-          gateError.textContent = 'Neteisinga data!';
-          if (window.navigator.vibrate) window.navigator.vibrate(200);
+    var gateForm = null, gateError = null, gateDateInput = null, gate = null, celebration = null, envelope = null, envelopePaper = null, daysCounterValue = null;
+    // Preview modalas tik preview.html, gate logika tik gate.html
+    const previewModal = document.getElementById('preview-modal');
+    const previewStartBtn = document.getElementById('preview-start');
+    if (window.location.pathname.includes('preview')) {
+        if (previewModal && previewStartBtn) {
+            previewModal.style.display = 'flex';
+            previewStartBtn.addEventListener('click', function() {
+                window.location.href = 'gate.html';
+            });
         }
-      });
     }
-  }
 
-  // Rožių žiedlapių generavimas
-  function createPetal() {
-    const petalsContainer = document.getElementById('petals');
-    if (!petalsContainer) return;
-    const petal = document.createElement('div');
-    petal.className = 'petal';
-    // Atsitiktinė pozicija ir dydis
-    const left = Math.random() * 100;
-    const size = 22 + Math.random() * 18;
-    const duration = 7 + Math.random() * 4;
-    petal.style.left = left + 'vw';
-    petal.style.width = size + 'px';
-    petal.style.height = size + 'px';
-    petal.style.animationDuration = duration + 's';
-    // Atsitiktinė spalva ir pasukimas
-    const colors = ['#e94f7a', '#f36f7f', '#ffb6c1', '#c23a6d'];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const rotate = -20 + Math.random() * 40;
-    petal.style.transform = `rotate(${rotate}deg)`;
-    // SVG žiedlapio forma
-    petal.innerHTML = `<svg viewBox="0 0 32 32" fill="${color}" xmlns="http://www.w3.org/2000/svg"><path d="M16 2c-2.5 2.5-7.5 10-7.5 15.5S13.5 30 16 30s7.5-7.5 7.5-12.5S18.5 4.5 16 2z"/></svg>`;
-    petalsContainer.appendChild(petal);
-    setTimeout(() => {
-      petal.remove();
-    }, duration * 1000);
-  }
-
-  let petalsInterval = null;
-  function startPetals() {
-    if (petalsInterval) return;
-    petalsInterval = setInterval(createPetal, 900);
-  }
-  function stopPetals() {
-    if (petalsInterval) {
-      clearInterval(petalsInterval);
-      petalsInterval = null;
+    // Gate logika tik gate.html
+    if (window.location.pathname.includes('gate')) {
+        gateForm = document.getElementById('gate-form');
+        gateError = document.getElementById('gate-error');
+        gateDateInput = document.getElementById('gate-date');
+        gate = document.getElementById('gate');
+        celebration = document.getElementById("celebration");
+        envelope = document.getElementById("love-envelope");
+        envelopePaper = document.getElementById("love-letter");
+        daysCounterValue = document.getElementById("days-counter-value");
+        if (gateForm && gateError) {
+            gateForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = gateDateInput;
+                const value = input ? input.value.trim() : '';
+                // Pakeiskite į teisingą datą (pvz. '2021-02-14' arba kita forma)
+                const correct = ['2021-02-14', '14-02-2021', '14/02/2021', '2021/02/14', '2021.02.14', '2021 02 14', '14 02 2021'];
+                if (correct.includes(value)) {
+                    // Sėkmingai atrakinta, redirect į index.html
+                    window.location.href = 'index.html';
+                } else {
+                    gateError.textContent = 'Neteisinga data!';
+                    if (window.navigator.vibrate) window.navigator.vibrate(200);
+                }
+            });
+        }
     }
-    const petalsContainer = document.getElementById('petals');
-    if (petalsContainer) petalsContainer.innerHTML = '';
-  }
-
-  // Plaukiojančių širdelių generavimas
-  function createFloatingHeart() {
-    const heartsContainer = document.getElementById('floating-hearts');
-    if (!heartsContainer) return;
-    const heart = document.createElement('div');
-    heart.className = 'floating-heart';
-    // Atsitiktinė pozicija ir dydis
-    const left = Math.random() * 100;
-    const size = 24 + Math.random() * 24;
-    const duration = 6 + Math.random() * 3;
-    heart.style.left = left + 'vw';
-    heart.style.width = size + 'px';
-    heart.style.height = size + 'px';
-    heart.style.animationDuration = duration + 's';
-    // Atsitiktinė spalva
-    const colors = ['#e94f7a', '#f36f7f', '#ffb6c1', '#c23a6d'];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    heart.innerHTML = `<svg viewBox="0 0 32 32" fill="${color}" xmlns="http://www.w3.org/2000/svg"><path d="M16 29s-9.7-7.2-12.7-12.1C-0.2 12.2 2.6 6.7 8.1 6.7c2.7 0 5.1 1.7 6.2 4.1C15.8 8.4 18.2 6.7 20.9 6.7c5.5 0 8.3 5.5 4.8 10.2C25.7 21.8 16 29 16 29z"/></svg>`;
-    heartsContainer.appendChild(heart);
-    setTimeout(() => {
-      heart.remove();
-    }, duration * 1000);
-  }
-
-  let heartsInterval = null;
-  function startFloatingHearts() {
-    if (heartsInterval) return;
-    heartsInterval = setInterval(createFloatingHeart, 700);
-  }
-  function stopFloatingHearts() {
-    if (heartsInterval) {
-      clearInterval(heartsInterval);
-      heartsInterval = null;
+    if (window.location.pathname.includes('index') || window.location.pathname.includes('preview')) {
+        cardsGrid = document.getElementById("cards-grid");
+        scoreValue = document.getElementById("score-value");
+        cardsToggle = document.getElementById("cards-toggle");
+        cardsSection = document.querySelector(".cards");
+        heartsContainer = document.querySelector(".background-hearts");
+        brightnessSlider = document.getElementById("heart-brightness");
+        speedSlider = document.getElementById("heart-speed");
+        heartToggle = document.getElementById("heart-toggle");
+        heartClose = document.getElementById("heart-close");
+        celebration = document.getElementById("celebration");
+        envelope = document.getElementById("love-envelope");
+        envelopePaper = document.getElementById("love-letter");
+        daysCounterValue = document.getElementById("days-counter-value");
+        gate = document.getElementById("gate");
     }
-    const heartsContainer = document.getElementById('floating-hearts');
-    if (heartsContainer) heartsContainer.innerHTML = '';
-  }
+
+    // Rožių žiedlapių generavimas
+    function createPetal() {
+        const petalsContainer = document.getElementById('petals');
+        if (!petalsContainer) return;
+        const petal = document.createElement('div');
+        petal.className = 'petal';
+        // Atsitiktinė pozicija ir dydis
+        const left = Math.random() * 100;
+        const size = 22 + Math.random() * 18;
+        const duration = 7 + Math.random() * 4;
+        petal.style.left = left + 'vw';
+        petal.style.width = size + 'px';
+        petal.style.height = size + 'px';
+        petal.style.animationDuration = duration + 's';
+        // Atsitiktinė spalva ir pasukimas
+        const colors = ['#e94f7a', '#f36f7f', '#ffb6c1', '#c23a6d'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const rotate = -20 + Math.random() * 40;
+        petal.style.transform = `rotate(${rotate}deg)`;
+        // SVG žiedlapio forma
+        petal.innerHTML = `<svg viewBox="0 0 32 32" fill="${color}" xmlns="http://www.w3.org/2000/svg"><path d="M16 2c-2.5 2.5-7.5 10-7.5 15.5S13.5 30 16 30s7.5-7.5 7.5-12.5S18.5 4.5 16 2z"/></svg>`;
+        petalsContainer.appendChild(petal);
+        setTimeout(() => {
+            petal.remove();
+        }, duration * 1000);
+    }
+
+    let petalsInterval = null;
+    function startPetals() {
+        if (petalsInterval) return;
+        petalsInterval = setInterval(createPetal, 900);
+    }
+    function stopPetals() {
+        if (petalsInterval) {
+            clearInterval(petalsInterval);
+            petalsInterval = null;
+        }
+        const petalsContainer = document.getElementById('petals');
+        if (petalsContainer) petalsContainer.innerHTML = '';
+    }
+
+    // Plaukiojančių širdelių generavimas
+    function createFloatingHeart() {
+        const heartsContainer = document.getElementById('floating-hearts');
+        if (!heartsContainer) return;
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        // Atsitiktinė pozicija ir dydis
+        const left = Math.random() * 100;
+        const size = 24 + Math.random() * 24;
+        const duration = 6 + Math.random() * 3;
+        heart.style.left = left + 'vw';
+        heart.style.width = size + 'px';
+        heart.style.height = size + 'px';
+        heart.style.animationDuration = duration + 's';
+        // Atsitiktinė spalva
+        const colors = ['#e94f7a', '#f36f7f', '#ffb6c1', '#c23a6d'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        heart.innerHTML = `<svg viewBox="0 0 32 32" fill="${color}" xmlns="http://www.w3.org/2000/svg"><path d="M16 29s-9.7-7.2-12.7-12.1C-0.2 12.2 2.6 6.7 8.1 6.7c2.7 0 5.1 1.7 6.2 4.1C15.8 8.4 18.2 6.7 20.9 6.7c5.5 0 8.3 5.5 4.8 10.2C25.7 21.8 16 29 16 29z"/></svg>`;
+        heartsContainer.appendChild(heart);
+        setTimeout(() => {
+            heart.remove();
+        }, duration * 1000);
+    }
+
+    let heartsInterval = null;
+    function startFloatingHearts() {
+        if (heartsInterval) return;
+        heartsInterval = setInterval(createFloatingHeart, 700);
+    }
+    function stopFloatingHearts() {
+        if (heartsInterval) {
+            clearInterval(heartsInterval);
+            heartsInterval = null;
+        }
+        const heartsContainer = document.getElementById('floating-hearts');
+        if (heartsContainer) heartsContainer.innerHTML = '';
+    }
 
 
 
@@ -122,7 +144,7 @@
 
 // ...existing code...
 
-if (window.location.pathname.includes('index')) {
+if (window.location.pathname.includes('index') || window.location.pathname.includes('preview')) {
     cardsGrid = document.getElementById("cards-grid");
     scoreValue = document.getElementById("score-value");
     cardsToggle = document.getElementById("cards-toggle");
@@ -135,8 +157,6 @@ if (window.location.pathname.includes('index')) {
 }
 
 // Gate logika (vokai, forma) tik gate.html
-// Pašalinta dubliuota deklaracija gateForm ir gateError
-const gateDateInput = document.getElementById("gate-date");
 const envelopeBtns = document.querySelectorAll('.envelope-btn');
 const envelopeMessage = document.getElementById('envelope-message');
 const envelopeChoose = document.getElementById('envelope-choose');
@@ -529,7 +549,7 @@ if (cardsToggle) {
 
 
 if (typeof cardsGrid !== 'undefined' && cardsGrid && scoreValue && cardsSection) {
-    renderCards(cardsData);
+    renderCards(window.cardsData);
     setCardsExpanded(false);
     updateInputModeClass();
 }
@@ -616,8 +636,8 @@ setGateInputMode();
 
 const unlockPage = () => {
     document.body.classList.add("is-celebrating");
-    gate?.classList.add("is-hidden");
-    celebration?.classList.add("is-visible");
+    if (gate) gate.classList.add("is-hidden");
+    if (celebration) celebration.classList.add("is-visible");
     createFloatingHearts(64);
 
     try {
@@ -630,7 +650,7 @@ const unlockPage = () => {
     window.setTimeout(() => {
         document.body.classList.remove("is-celebrating");
         document.body.classList.remove("is-locked");
-        celebration?.classList.remove("is-visible");
+        if (celebration) celebration.classList.remove("is-visible");
         refreshHearts();
     }, celebrationDuration);
 };
@@ -819,7 +839,7 @@ if (envelope) {
 
 const root = document.documentElement;
 if (shouldAutoUnlock()) {
-    gate?.classList.add("is-hidden");
+    if (gate) gate.classList.add("is-hidden");
     document.body.classList.remove("is-locked");
 }
 root.classList.remove("gate-preload");
