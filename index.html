@@ -6,6 +6,7 @@
     <script>
       // Redirect only from root, not after secret code
       // Jei localStorage turi unlock, neredirectinam
+      var isRoot = window.location.pathname.replace(/\/index\.html$/, "") === "/valentinas/";
       try {
         var unlock = localStorage.getItem("valentinoUnlock");
         var unlocked = false;
@@ -15,11 +16,11 @@
             unlocked = true;
           }
         }
-        if (!unlocked && (window.location.pathname === "/valentinas/" || window.location.pathname === "/valentinas/index.html")) {
+        if (!unlocked && isRoot) {
           window.location.href = "preview.html";
         }
       } catch (e) {
-        if (window.location.pathname === "/valentinas/" || window.location.pathname === "/valentinas/index.html") {
+        if (isRoot) {
           window.location.href = "preview.html";
         }
       }
