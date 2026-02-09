@@ -1,22 +1,13 @@
 <!doctype html>
 <html lang="lt">
   <head>
-        <script>
-          // Jei vartotojas bando atidaryti index.html tiesiogiai, peradresuoti į preview.html
-          if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
-            if (!window.location.pathname.includes('preview')) {
-              window.location.href = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'preview.html';
-            }
-          }
-        </script>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
     <meta charset="UTF-8" />
-    <!-- Pašalintas automatinis peradresavimas į preview.html -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       document.documentElement.classList.add("gate-preload");
     </script>
-    <title>Mūsų meilės diena 💝</title>
+    <title>Mūsų meilės dienos pradžia 💝</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -26,14 +17,20 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css?v=2" />
   </head>
-  <body>
+  <body class="is-locked">
     <div class="background-hearts" aria-hidden="true"></div>
     <div class="days-counter" id="days-counter" aria-live="polite">
       <span class="days-counter__label">Mūsų praleistas laikas kartu</span>
       <span class="days-counter__value" id="days-counter-value"></span>
     </div>
-
-
+    <div class="preview-modal" id="preview-modal" style="display:flex;">
+      <div class="preview-overlay"></div>
+      <div class="preview__card">
+        <h2>Labas, mano meile! <span class="preview-heart">💝</span></h2>
+        <p>Ši svetainė skirta tik tau. Pasiruošk siurprizui ir paspausk „Pradėti“.</p>
+        <button class="button" id="preview-start">Pradėti</button>
+      </div>
+    </div>
     <div class="celebration" id="celebration" aria-live="polite">
       <div class="celebration__card">
         <p class="celebration__eyebrow">Valentino diena</p>
