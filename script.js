@@ -1,4 +1,3 @@
-
 (function() {
     // Declare index page variables at top scope
     var cardsGrid, scoreValue, cardsToggle, cardsSection, heartsContainer, brightnessSlider, speedSlider, heartToggle, heartClose;
@@ -15,9 +14,10 @@
   }
 
   // Gate logika tik gate.html
+  var gateForm = null, gateError = null;
   if (window.location.pathname.includes('gate')) {
-    const gateForm = document.getElementById('gate-form');
-    const gateError = document.getElementById('gate-error');
+    gateForm = document.getElementById('gate-form');
+    gateError = document.getElementById('gate-error');
     if (gateForm && gateError) {
       gateForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -120,64 +120,60 @@
 })();
 
 
-
 // ...existing code...
 
-// ...existing code...
 if (window.location.pathname.includes('index')) {
-  cardsGrid = document.getElementById("cards-grid");
-  scoreValue = document.getElementById("score-value");
-  cardsToggle = document.getElementById("cards-toggle");
-  cardsSection = document.querySelector(".cards");
-  heartsContainer = document.querySelector(".background-hearts");
-  brightnessSlider = document.getElementById("heart-brightness");
-  speedSlider = document.getElementById("heart-speed");
-  heartToggle = document.getElementById("heart-toggle");
-  heartClose = document.getElementById("heart-close");
+    cardsGrid = document.getElementById("cards-grid");
+    scoreValue = document.getElementById("score-value");
+    cardsToggle = document.getElementById("cards-toggle");
+    cardsSection = document.querySelector(".cards");
+    heartsContainer = document.querySelector(".background-hearts");
+    brightnessSlider = document.getElementById("heart-brightness");
+    speedSlider = document.getElementById("heart-speed");
+    heartToggle = document.getElementById("heart-toggle");
+    heartClose = document.getElementById("heart-close");
 }
 
 // Gate logika (vokai, forma) tik gate.html
-// const gate = document.getElementById("gate"); // Already declared above
-// Duplicate declaration removed. Only one gateForm variable should exist.
+// Pašalinta dubliuota deklaracija gateForm ir gateError
 const gateDateInput = document.getElementById("gate-date");
-const gateError = document.getElementById("gate-error");
 const envelopeBtns = document.querySelectorAll('.envelope-btn');
 const envelopeMessage = document.getElementById('envelope-message');
 const envelopeChoose = document.getElementById('envelope-choose');
 const gateFormWrap = document.getElementById('gate-form-wrap');
 if (window.location.pathname.includes('gate') && envelopeBtns.length && envelopeMessage && gateFormWrap && envelopeChoose) {
-  gateFormWrap.style.display = "none";
-  const correct = Math.floor(Math.random() * 3);
-  let unlocked = false;
-  envelopeBtns.forEach((btn, idx) => {
-    btn.addEventListener('click', () => {
-      if (unlocked) return;
-      if (btn.classList.contains('correct') || btn.classList.contains('open')) return;
-      if (idx === correct) {
-        unlocked = true;
-        btn.classList.add('open');
-        setTimeout(() => {
-          btn.classList.add('correct');
-          envelopeMessage.textContent = "Teisingai! Radai Slapto Įėjimo Voką.😘";
-        }, 400);
-        setTimeout(() => {
-          envelopeChoose.style.display = "none";
-          gateFormWrap.style.display = "block";
-          startFloatingHearts();
-          startPetals();
-        }, 1200);
-      } else {
-        btn.classList.add('shake');
-        envelopeMessage.textContent = "Šiame voke nieko nėra. Pabandyk kitą!";
-        if (window.navigator && window.navigator.vibrate) {
-          window.navigator.vibrate(200);
-        }
-        setTimeout(() => {
-          btn.classList.remove('shake');
-        }, 400);
-      }
+    gateFormWrap.style.display = "none";
+    const correct = Math.floor(Math.random() * 3);
+    let unlocked = false;
+    envelopeBtns.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+            if (unlocked) return;
+            if (btn.classList.contains('correct') || btn.classList.contains('open')) return;
+            if (idx === correct) {
+                unlocked = true;
+                btn.classList.add('open');
+                setTimeout(() => {
+                    btn.classList.add('correct');
+                    envelopeMessage.textContent = "Teisingai! Radai Slapto Įėjimo Voką.😘";
+                }, 400);
+                setTimeout(() => {
+                    envelopeChoose.style.display = "none";
+                    gateFormWrap.style.display = "block";
+                    startFloatingHearts();
+                    startPetals();
+                }, 1200);
+            } else {
+                btn.classList.add('shake');
+                envelopeMessage.textContent = "Šiame voke nieko nėra. Pabandyk kitą!";
+                if (window.navigator && window.navigator.vibrate) {
+                    window.navigator.vibrate(200);
+                }
+                setTimeout(() => {
+                    btn.classList.remove('shake');
+                }, 400);
+            }
+        });
     });
-  });
 }
 const celebration = document.getElementById("celebration");
 const mobileCardMedia = window.matchMedia("(max-width: 600px)");
@@ -198,420 +194,420 @@ let isTouchScratching = false;
 let touchMoveListenerAdded = false;
 
 const addMonths = (date, monthsToAdd) => {
-  const result = new Date(date);
-  const day = result.getDate();
-  result.setDate(1);
-  result.setMonth(result.getMonth() + monthsToAdd);
-  const lastDay = new Date(result.getFullYear(), result.getMonth() + 1, 0).getDate();
-  result.setDate(Math.min(day, lastDay));
-  return result;
+    const result = new Date(date);
+    const day = result.getDate();
+    result.setDate(1);
+    result.setMonth(result.getMonth() + monthsToAdd);
+    const lastDay = new Date(result.getFullYear(), result.getMonth() + 1, 0).getDate();
+    result.setDate(Math.min(day, lastDay));
+    return result;
 };
 
 const updateDaysCounter = () => {
-  if (!daysCounterValue) return;
-  const startDate = new Date(targetDate.year, targetDate.month - 1, targetDate.day);
-  const now = new Date();
-  if (now < startDate) {
-    daysCounterValue.textContent = " 0 mėn. 0 d. 0 val. 0 min. 0 sek.";
-    return;
-  }
+    if (!daysCounterValue) return;
+    const startDate = new Date(targetDate.year, targetDate.month - 1, targetDate.day);
+    const now = new Date();
+    if (now < startDate) {
+        daysCounterValue.textContent = " 0 mėn. 0 d. 0 val. 0 min. 0 sek.";
+        return;
+    }
 
-  let months =
-    (now.getFullYear() - startDate.getFullYear()) * 12 +
-    (now.getMonth() - startDate.getMonth());
-  let anchor = addMonths(startDate, months);
-  if (anchor > now) {
-    months -= 1;
-    anchor = addMonths(startDate, months);
-  }
+    let months =
+        (now.getFullYear() - startDate.getFullYear()) * 12 +
+        (now.getMonth() - startDate.getMonth());
+    let anchor = addMonths(startDate, months);
+    if (anchor > now) {
+        months -= 1;
+        anchor = addMonths(startDate, months);
+    }
 
-  const diffMs = now.getTime() - anchor.getTime();
-  const days = Math.floor(diffMs / 86400000);
-  const hours = Math.floor((diffMs % 86400000) / 3600000);
-  const minutes = Math.floor((diffMs % 3600000) / 60000);
-  const seconds = Math.floor((diffMs % 60000) / 1000);
-  const minutesLabel = String(minutes).padStart(2, "0");
-  const secondsLabel = String(seconds).padStart(2, "0");
-  daysCounterValue.textContent = `${months} mėn. ${days} d. ${hours} val. ${minutesLabel} min. ${secondsLabel} sek.`;
+    const diffMs = now.getTime() - anchor.getTime();
+    const days = Math.floor(diffMs / 86400000);
+    const hours = Math.floor((diffMs % 86400000) / 3600000);
+    const minutes = Math.floor((diffMs % 3600000) / 60000);
+    const seconds = Math.floor((diffMs % 60000) / 1000);
+    const minutesLabel = String(minutes).padStart(2, "0");
+    const secondsLabel = String(seconds).padStart(2, "0");
+    daysCounterValue.textContent = `${months} mėn. ${days} d. ${hours} val. ${minutesLabel} min. ${secondsLabel} sek.`;
 };
 
 
 const updateInputModeClass = () => {
-  if (touchMedia.matches) {
-    document.body.classList.add("is-touch");
-  } else {
-    document.body.classList.remove("is-touch");
-  }
+    if (touchMedia.matches) {
+        document.body.classList.add("is-touch");
+    } else {
+        document.body.classList.remove("is-touch");
+    }
 };
 
 const setGateInputMode = () => {
-  if (!gateDateInput) return;
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (isMobile) {
-    gateDateInput.setAttribute("type", "text");
-    gateDateInput.removeAttribute("inputmode");
-  } else {
-    gateDateInput.setAttribute("type", "text");
-    gateDateInput.setAttribute("inputmode", "numeric");
-  }
+    if (!gateDateInput) return;
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isMobile) {
+        gateDateInput.setAttribute("type", "text");
+        gateDateInput.removeAttribute("inputmode");
+    } else {
+        gateDateInput.setAttribute("type", "text");
+        gateDateInput.setAttribute("inputmode", "numeric");
+    }
 };
 
 updateDaysCounter();
 setInterval(updateDaysCounter, 1000);
 
 const playRevealSound = () => {
-  try {
-    if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    try {
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioContext.state === "suspended") {
+            audioContext.resume();
+        }
+
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = 880;
+        gainNode.gain.value = 0.06;
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+
+        oscillator.start();
+        gainNode.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + 0.12
+        );
+        oscillator.stop(audioContext.currentTime + 0.13);
+    } catch (error) {
+        // Ignore audio errors (autoplay restrictions, unsupported API)
     }
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
-
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-
-    oscillator.type = "sine";
-    oscillator.frequency.value = 880;
-    gainNode.gain.value = 0.06;
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    oscillator.start();
-    gainNode.gain.exponentialRampToValueAtTime(
-      0.001,
-      audioContext.currentTime + 0.12
-    );
-    oscillator.stop(audioContext.currentTime + 0.13);
-  } catch (error) {
-    // Ignore audio errors (autoplay restrictions, unsupported API)
-  }
 };
 
 const createCard = (text) => {
-  const card = document.createElement("div");
-  card.className = "card";
-  card.setAttribute("role", "button");
-  card.setAttribute("aria-label", "Nutrinti kortele");
-  card.setAttribute("aria-expanded", "true");
+    const card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", "Nutrinti kortele");
+    card.setAttribute("aria-expanded", "true");
 
-  const content = document.createElement("div");
-  content.className = "card__content";
-  content.textContent = text;
+    const content = document.createElement("div");
+    content.className = "card__content";
+    content.textContent = text;
 
-  const hint = document.createElement("div");
-  hint.className = "card__hint";
-  hint.textContent = "Paliesk, kad atidarytum";
+    const hint = document.createElement("div");
+    hint.className = "card__hint";
+    hint.textContent = "Paliesk, kad atidarytum";
 
-  const canvas = document.createElement("canvas");
-  canvas.className = "card__scratch";
-  canvas.setAttribute("aria-hidden", "true");
+    const canvas = document.createElement("canvas");
+    canvas.className = "card__scratch";
+    canvas.setAttribute("aria-hidden", "true");
 
-  card.append(content, hint, canvas);
+    card.append(content, hint, canvas);
 
-  return card;
+    return card;
 };
 
 const setCardCollapsed = (card, shouldCollapse) => {
-  if (shouldCollapse) {
-    card.classList.add("card--collapsed");
-    card.setAttribute("aria-expanded", "false");
-  } else {
-    card.classList.remove("card--collapsed");
-    card.setAttribute("aria-expanded", "true");
-  }
+    if (shouldCollapse) {
+        card.classList.add("card--collapsed");
+        card.setAttribute("aria-expanded", "false");
+    } else {
+        card.classList.remove("card--collapsed");
+        card.setAttribute("aria-expanded", "true");
+    }
 };
 
 const setCardsExpanded = (isExpanded) => {
-  if (!cardsSection) return;
-  cardsSection.classList.toggle("cards--collapsed", !isExpanded);
-  if (cardsToggle) {
-    cardsToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
-    cardsToggle.textContent = isExpanded ? "Slėpti korteles" : "Išskleisti korteles";
-  }
-  if (isExpanded) {
-    window.requestAnimationFrame(() => {
-      document.querySelectorAll(".card__scratch").forEach((canvas) => {
-        if (canvas.__redrawOverlay) {
-          canvas.__redrawOverlay();
-        }
-      });
-    });
-  }
+    if (!cardsSection) return;
+    cardsSection.classList.toggle("cards--collapsed", !isExpanded);
+    if (cardsToggle) {
+        cardsToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+        cardsToggle.textContent = isExpanded ? "Slėpti korteles" : "Išskleisti korteles";
+    }
+    if (isExpanded) {
+        window.requestAnimationFrame(() => {
+            document.querySelectorAll(".card__scratch").forEach((canvas) => {
+                if (canvas.__redrawOverlay) {
+                    canvas.__redrawOverlay();
+                }
+            });
+        });
+    }
 };
 
 
 const setupScratchCanvas = (card, canvas) => {
-  const context = canvas.getContext("2d", { willReadFrequently: true });
-  if (!context) return;
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    if (!context) return;
 
-  if (!touchMoveListenerAdded) {
-    document.addEventListener(
-      "touchmove",
-      (event) => {
-        if (isTouchScratching) event.preventDefault();
-      },
-      { passive: false }
-    );
-    touchMoveListenerAdded = true;
-  }
-
-  const drawOverlay = () => {
-    const rect = card.getBoundingClientRect();
-    const ratio = window.devicePixelRatio || 1;
-
-    canvas.width = rect.width * ratio;
-    canvas.height = rect.height * ratio;
-    canvas.style.width = `${rect.width}px`;
-    canvas.style.height = `${rect.height}px`;
-    context.setTransform(ratio, 0, 0, ratio, 0, 0);
-
-    context.globalCompositeOperation = "source-over";
-    context.fillStyle = "#f36f7f";
-    context.fillRect(0, 0, rect.width, rect.height);
-
-    context.fillStyle = "rgba(255, 255, 255, 0.25)";
-    for (let i = 0; i < 18; i += 1) {
-      const x = Math.random() * rect.width;
-      const y = Math.random() * rect.height;
-      const r = 3 + Math.random() * 4;
-      context.beginPath();
-      context.arc(x, y, r, 0, Math.PI * 2);
-      context.fill();
+    if (!touchMoveListenerAdded) {
+        document.addEventListener(
+            "touchmove",
+            (event) => {
+                if (isTouchScratching) event.preventDefault();
+            },
+            { passive: false }
+        );
+        touchMoveListenerAdded = true;
     }
 
-    context.globalCompositeOperation = "destination-out";
-  };
+    const drawOverlay = () => {
+        const rect = card.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
 
-  drawOverlay();
-  canvas.__redrawOverlay = drawOverlay;
+        canvas.width = rect.width * ratio;
+        canvas.height = rect.height * ratio;
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-  let isDrawing = false;
+        context.globalCompositeOperation = "source-over";
+        context.fillStyle = "#f36f7f";
+        context.fillRect(0, 0, rect.width, rect.height);
 
-  const scratchAtPoint = (clientX, clientY) => {
-    const rect = canvas.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+        context.fillStyle = "rgba(255, 255, 255, 0.25)";
+        for (let i = 0; i < 18; i += 1) {
+            const x = Math.random() * rect.width;
+            const y = Math.random() * rect.height;
+            const r = 3 + Math.random() * 4;
+            context.beginPath();
+            context.arc(x, y, r, 0, Math.PI * 2);
+            context.fill();
+        }
 
-    context.beginPath();
-    context.arc(x, y, scratchRadius, 0, Math.PI * 2);
-    context.fill();
-  };
+        context.globalCompositeOperation = "destination-out";
+    };
 
-  const checkReveal = () => {
-    if (card.classList.contains("is-revealed")) return;
-    const { width, height } = canvas;
-    const imageData = context.getImageData(0, 0, width, height);
-    const pixels = imageData.data;
-    const step = 24;
-    let cleared = 0;
-    let total = 0;
+    drawOverlay();
+    canvas.__redrawOverlay = drawOverlay;
 
-    for (let y = 0; y < height; y += step) {
-      for (let x = 0; x < width; x += step) {
-        const index = (y * width + x) * 4 + 3;
-        total += 1;
-        if (pixels[index] < 12) cleared += 1;
-      }
-    }
+    let isDrawing = false;
 
-    if (cleared / total > 0.25) {
-      card.classList.add("is-revealed");
-      score += 1;
-      scoreValue.textContent = score.toString();
-      playRevealSound();
-      context.clearRect(0, 0, width, height);
-    }
-  };
+    const scratchAtPoint = (clientX, clientY) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
-  const startScratch = (event) => {
-    event.preventDefault();
-    isDrawing = true;
-    canvas.setPointerCapture(event.pointerId);
-    scratchAtPoint(event.clientX, event.clientY);
-  };
+        context.beginPath();
+        context.arc(x, y, scratchRadius, 0, Math.PI * 2);
+        context.fill();
+    };
 
-  let revealTimer;
-  const scheduleRevealCheck = () => {
-    if (revealTimer) return;
-    revealTimer = window.setTimeout(() => {
-      revealTimer = null;
-      checkReveal();
-    }, 180);
-  };
+    const checkReveal = () => {
+        if (card.classList.contains("is-revealed")) return;
+        const { width, height } = canvas;
+        const imageData = context.getImageData(0, 0, width, height);
+        const pixels = imageData.data;
+        const step = 24;
+        let cleared = 0;
+        let total = 0;
 
-  const moveScratch = (event) => {
-    event.preventDefault();
-    if (!isDrawing) return;
-    scratchAtPoint(event.clientX, event.clientY);
-    scheduleRevealCheck();
-  };
+        for (let y = 0; y < height; y += step) {
+            for (let x = 0; x < width; x += step) {
+                const index = (y * width + x) * 4 + 3;
+                total += 1;
+                if (pixels[index] < 12) cleared += 1;
+            }
+        }
 
-  const endScratch = (event) => {
-    event.preventDefault();
-    if (!isDrawing) return;
-    isDrawing = false;
-    canvas.releasePointerCapture(event.pointerId);
-    checkReveal();
-  };
+        if (cleared / total > 0.25) {
+            card.classList.add("is-revealed");
+            score += 1;
+            scoreValue.textContent = score.toString();
+            playRevealSound();
+            context.clearRect(0, 0, width, height);
+        }
+    };
 
-  let touchStartX = 0;
-  let touchStartY = 0;
+    const startScratch = (event) => {
+        event.preventDefault();
+        isDrawing = true;
+        canvas.setPointerCapture(event.pointerId);
+        scratchAtPoint(event.clientX, event.clientY);
+    };
 
-  const startTouch = (event) => {
-    if (!event.touches?.length) return;
-    const touch = event.touches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-    isDrawing = true;
-    isTouchScratching = true;
-    scratchAtPoint(touch.clientX, touch.clientY);
-  };
+    let revealTimer;
+    const scheduleRevealCheck = () => {
+        if (revealTimer) return;
+        revealTimer = window.setTimeout(() => {
+            revealTimer = null;
+            checkReveal();
+        }, 180);
+    };
 
-  const moveTouch = (event) => {
-    if (!isDrawing || !event.touches?.length) return;
-    const touch = event.touches[0];
-    const deltaX = Math.abs(touch.clientX - touchStartX);
-    const deltaY = Math.abs(touch.clientY - touchStartY);
-    if (deltaY > deltaX + 6) {
-      isDrawing = false;
-      isTouchScratching = false;
-      return;
-    }
-    event.preventDefault();
-    scratchAtPoint(touch.clientX, touch.clientY);
-    scheduleRevealCheck();
-  };
+    const moveScratch = (event) => {
+        event.preventDefault();
+        if (!isDrawing) return;
+        scratchAtPoint(event.clientX, event.clientY);
+        scheduleRevealCheck();
+    };
 
-  const endTouch = () => {
-    if (!isDrawing) return;
-    isDrawing = false;
-    isTouchScratching = false;
-    checkReveal();
-  };
+    const endScratch = (event) => {
+        event.preventDefault();
+        if (!isDrawing) return;
+        isDrawing = false;
+        canvas.releasePointerCapture(event.pointerId);
+        checkReveal();
+    };
 
-  const passiveFalse = { passive: false };
+    let touchStartX = 0;
+    let touchStartY = 0;
 
-  canvas.addEventListener("pointerdown", startScratch, passiveFalse);
-  canvas.addEventListener("pointermove", moveScratch, passiveFalse);
-  canvas.addEventListener("pointerup", endScratch, passiveFalse);
-  canvas.addEventListener("pointercancel", endScratch, passiveFalse);
+    const startTouch = (event) => {
+        if (!event.touches?.length) return;
+        const touch = event.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+        isDrawing = true;
+        isTouchScratching = true;
+        scratchAtPoint(touch.clientX, touch.clientY);
+    };
 
-  canvas.addEventListener("touchstart", startTouch, passiveFalse);
-  canvas.addEventListener("touchmove", moveTouch, passiveFalse);
-  canvas.addEventListener("touchend", endTouch, passiveFalse);
-  canvas.addEventListener("touchcancel", endTouch, passiveFalse);
+    const moveTouch = (event) => {
+        if (!isDrawing || !event.touches?.length) return;
+        const touch = event.touches[0];
+        const deltaX = Math.abs(touch.clientX - touchStartX);
+        const deltaY = Math.abs(touch.clientY - touchStartY);
+        if (deltaY > deltaX + 6) {
+            isDrawing = false;
+            isTouchScratching = false;
+            return;
+        }
+        event.preventDefault();
+        scratchAtPoint(touch.clientX, touch.clientY);
+        scheduleRevealCheck();
+    };
 
-  window.addEventListener("resize", () => {
-    if (!card.classList.contains("is-revealed")) {
-      drawOverlay();
-    }
-  });
+    const endTouch = () => {
+        if (!isDrawing) return;
+        isDrawing = false;
+        isTouchScratching = false;
+        checkReveal();
+    };
+
+    const passiveFalse = { passive: false };
+
+    canvas.addEventListener("pointerdown", startScratch, passiveFalse);
+    canvas.addEventListener("pointermove", moveScratch, passiveFalse);
+    canvas.addEventListener("pointerup", endScratch, passiveFalse);
+    canvas.addEventListener("pointercancel", endScratch, passiveFalse);
+
+    canvas.addEventListener("touchstart", startTouch, passiveFalse);
+    canvas.addEventListener("touchmove", moveTouch, passiveFalse);
+    canvas.addEventListener("touchend", endTouch, passiveFalse);
+    canvas.addEventListener("touchcancel", endTouch, passiveFalse);
+
+    window.addEventListener("resize", () => {
+        if (!card.classList.contains("is-revealed")) {
+            drawOverlay();
+        }
+    });
 };
 
 const renderCards = (data) => {
-  if (!cardsGrid) return;
-  cardsGrid.innerHTML = "";
-  data.forEach((text) => {
-    const card = createCard(text);
-    cardsGrid.append(card);
-    const canvas = card.querySelector(".card__scratch");
-    if (canvas) {
-      setupScratchCanvas(card, canvas);
-    }
-  });
+    if (!cardsGrid) return;
+    cardsGrid.innerHTML = "";
+    data.forEach((text) => {
+        const card = createCard(text);
+        cardsGrid.append(card);
+        const canvas = card.querySelector(".card__scratch");
+        if (canvas) {
+            setupScratchCanvas(card, canvas);
+        }
+    });
 };
 
 
 if (cardsToggle) {
-  cardsToggle.addEventListener("click", () => {
-    const isExpanded = !cardsSection?.classList.contains("cards--collapsed");
-    setCardsExpanded(!isExpanded);
-  });
+    cardsToggle.addEventListener("click", () => {
+        const isExpanded = !cardsSection?.classList.contains("cards--collapsed");
+        setCardsExpanded(!isExpanded);
+    });
 }
 
 
 if (typeof cardsGrid !== 'undefined' && cardsGrid && scoreValue && cardsSection) {
-  renderCards(cardsData);
-  setCardsExpanded(false);
-  updateInputModeClass();
+    renderCards(cardsData);
+    setCardsExpanded(false);
+    updateInputModeClass();
 }
 
 const memoryBoxes = document.querySelectorAll(".memory-box");
 if (memoryBoxes.length) {
-  memoryBoxes.forEach((box) => {
-    const lid = box.querySelector(".memory-box__lid");
-    if (lid) {
-      lid.addEventListener("click", (event) => {
-        event.preventDefault();
-        box.classList.toggle("is-open");
-      });
-    }
-  });
+    memoryBoxes.forEach((box) => {
+        const lid = box.querySelector(".memory-box__lid");
+        if (lid) {
+            lid.addEventListener("click", (event) => {
+                event.preventDefault();
+                box.classList.toggle("is-open");
+            });
+        }
+    });
 }
 
 const createFloatingHearts = (count) => {
-  if (!heartsContainer) return;
-  heartsContainer.innerHTML = "";
+    if (!heartsContainer) return;
+    heartsContainer.innerHTML = "";
 
-  for (let index = 0; index < count; index += 1) {
-    const heart = document.createElement("span");
-    heart.className = "floating-heart";
-    heart.textContent = "\u2665";
+    for (let index = 0; index < count; index += 1) {
+        const heart = document.createElement("span");
+        heart.className = "floating-heart";
+        heart.textContent = "\u2665";
 
-    const size = 16 + Math.random() * 24;
-    const duration = 12 + Math.random() * 16;
-    const delay = -Math.random() * duration;
-    const left = Math.random() * 100;
+        const size = 16 + Math.random() * 24;
+        const duration = 12 + Math.random() * 16;
+        const delay = -Math.random() * duration;
+        const left = Math.random() * 100;
 
-    heart.style.setProperty("--size", `${size}px`);
-    heart.style.setProperty("--duration", `${duration}s`);
-    heart.style.left = `${left}vw`;
-    heart.style.animationDelay = `${delay}s`;
+        heart.style.setProperty("--size", `${size}px`);
+        heart.style.setProperty("--duration", `${duration}s`);
+        heart.style.left = `${left}vw`;
+        heart.style.animationDelay = `${delay}s`;
 
-    heartsContainer.append(heart);
-  }
+        heartsContainer.append(heart);
+    }
 };
 
 const updateHeartControls = () => {
-  if (!heartsContainer) return;
-  if (brightnessSlider) {
-    heartsContainer.style.setProperty("--heart-opacity", brightnessSlider.value);
-  }
-  if (speedSlider) {
-    heartsContainer.style.setProperty("--heart-speed", speedSlider.value);
-  }
+    if (!heartsContainer) return;
+    if (brightnessSlider) {
+        heartsContainer.style.setProperty("--heart-opacity", brightnessSlider.value);
+    }
+    if (speedSlider) {
+        heartsContainer.style.setProperty("--heart-speed", speedSlider.value);
+    }
 };
 
 const getHeartCount = () => (window.innerWidth <= 600 ? 16 : 28);
 
 const refreshHearts = () => {
-  createFloatingHearts(getHeartCount());
-  updateHeartControls();
+    createFloatingHearts(getHeartCount());
+    updateHeartControls();
 };
 
 refreshHearts();
 
 if (brightnessSlider) {
-  brightnessSlider.addEventListener("input", updateHeartControls);
+    brightnessSlider.addEventListener("input", updateHeartControls);
 }
 
 
 if (speedSlider) {
-  speedSlider.addEventListener("input", updateHeartControls);
+    speedSlider.addEventListener("input", updateHeartControls);
 }
 
 if (heartToggle) {
-  heartToggle.addEventListener("click", () => {
-    heartToggle.closest(".heart-controls")?.classList.toggle("is-collapsed");
-  });
+    heartToggle.addEventListener("click", () => {
+        heartToggle.closest(".heart-controls")?.classList.toggle("is-collapsed");
+    });
 }
 
 if (heartClose) {
-  heartClose.addEventListener("click", () => {
-    heartClose.closest(".heart-controls")?.classList.add("is-collapsed");
-  });
+    heartClose.addEventListener("click", () => {
+        heartClose.closest(".heart-controls")?.classList.add("is-collapsed");
+    });
 }
 
 updateHeartControls();
@@ -619,216 +615,216 @@ updateHeartControls();
 setGateInputMode();
 
 const unlockPage = () => {
-  document.body.classList.add("is-celebrating");
-  gate?.classList.add("is-hidden");
-  celebration?.classList.add("is-visible");
-  createFloatingHearts(64);
+    document.body.classList.add("is-celebrating");
+    gate?.classList.add("is-hidden");
+    celebration?.classList.add("is-visible");
+    createFloatingHearts(64);
 
-  try {
-    const payload = { unlockedAt: Date.now() };
-    localStorage.setItem(unlockCacheKey, JSON.stringify(payload));
-  } catch (error) {
-    // Ignore storage errors (private mode, blocked storage, etc.)
-  }
+    try {
+        const payload = { unlockedAt: Date.now() };
+        localStorage.setItem(unlockCacheKey, JSON.stringify(payload));
+    } catch (error) {
+        // Ignore storage errors (private mode, blocked storage, etc.)
+    }
 
-  window.setTimeout(() => {
-    document.body.classList.remove("is-celebrating");
-    document.body.classList.remove("is-locked");
-    celebration?.classList.remove("is-visible");
-    refreshHearts();
-  }, celebrationDuration);
+    window.setTimeout(() => {
+        document.body.classList.remove("is-celebrating");
+        document.body.classList.remove("is-locked");
+        celebration?.classList.remove("is-visible");
+        refreshHearts();
+    }, celebrationDuration);
 };
 
 const shouldAutoUnlock = () => {
-  try {
-    const raw = localStorage.getItem(unlockCacheKey);
-    if (!raw) return false;
-    const parsed = JSON.parse(raw);
-    if (!parsed?.unlockedAt) return false;
-    return Date.now() - parsed.unlockedAt < unlockTtlMs;
-  } catch (error) {
-    return false;
-  }
+    try {
+        const raw = localStorage.getItem(unlockCacheKey);
+        if (!raw) return false;
+        const parsed = JSON.parse(raw);
+        if (!parsed?.unlockedAt) return false;
+        return Date.now() - parsed.unlockedAt < unlockTtlMs;
+    } catch (error) {
+        return false;
+    }
 };
 
 const isValidDate = ({ year, month, day }) => {
-  const date = new Date(Date.UTC(year, month - 1, day));
-  return (
-    date.getUTCFullYear() === year &&
-    date.getUTCMonth() === month - 1 &&
-    date.getUTCDate() === day
-  );
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return (
+        date.getUTCFullYear() === year &&
+        date.getUTCMonth() === month - 1 &&
+        date.getUTCDate() === day
+    );
 };
 
 const parseDateParts = (value) => {
-  if (!value) return null;
-  const trimmed = value.trim();
-  if (!trimmed) return null;
+    if (!value) return null;
+    const trimmed = value.trim();
+    if (!trimmed) return null;
 
-  const digitsOnly = trimmed.replace(/\D/g, "");
-  if (digitsOnly.length === 8) {
-    const firstFour = Number(digitsOnly.slice(0, 4));
-    const lastFour = Number(digitsOnly.slice(4));
+    const digitsOnly = trimmed.replace(/\D/g, "");
+    if (digitsOnly.length === 8) {
+        const firstFour = Number(digitsOnly.slice(0, 4));
+        const lastFour = Number(digitsOnly.slice(4));
 
-    const ymd = {
-      year: firstFour,
-      month: Number(digitsOnly.slice(4, 6)),
-      day: Number(digitsOnly.slice(6, 8))
-    };
-    const dmy = {
-      year: lastFour,
-      month: Number(digitsOnly.slice(2, 4)),
-      day: Number(digitsOnly.slice(0, 2))
-    };
+        const ymd = {
+            year: firstFour,
+            month: Number(digitsOnly.slice(4, 6)),
+            day: Number(digitsOnly.slice(6, 8))
+        };
+        const dmy = {
+            year: lastFour,
+            month: Number(digitsOnly.slice(2, 4)),
+            day: Number(digitsOnly.slice(0, 2))
+        };
 
-    if (firstFour >= 1900 && isValidDate(ymd)) return ymd;
-    if (lastFour >= 1900 && isValidDate(dmy)) return dmy;
-    return null;
-  }
+        if (firstFour >= 1900 && isValidDate(ymd)) return ymd;
+        if (lastFour >= 1900 && isValidDate(dmy)) return dmy;
+        return null;
+    }
 
-  if (digitsOnly.length === 6) {
-    const day = Number(digitsOnly.slice(0, 2));
-    const month = Number(digitsOnly.slice(2, 4));
-    const year = 2000 + Number(digitsOnly.slice(4, 6));
+    if (digitsOnly.length === 6) {
+        const day = Number(digitsOnly.slice(0, 2));
+        const month = Number(digitsOnly.slice(2, 4));
+        const year = 2000 + Number(digitsOnly.slice(4, 6));
+        return isValidDate({ year, month, day }) ? { year, month, day } : null;
+    }
+
+    const parts = trimmed.split(/\D+/).filter(Boolean);
+    if (parts.length !== 3) return null;
+
+    const [first, second, third] = parts.map(Number);
+    if ([first, second, third].some((part) => Number.isNaN(part))) return null;
+
+    let year;
+    let month;
+    let day;
+
+    if (parts[0].length === 4) {
+        year = first;
+        month = second;
+        day = third;
+    } else if (parts[2].length === 4) {
+        year = third;
+
+        if (first <= 12 && second <= 12) {
+            month = first;
+            day = second;
+        } else if (first > 12) {
+            day = first;
+            month = second;
+        } else {
+            day = first;
+            month = second;
+        }
+    } else {
+        if (parts[2].length === 2) {
+            year = 2000 + third;
+            if (first <= 12 && second <= 12) {
+                month = first;
+                day = second;
+            } else if (first > 12) {
+                day = first;
+                month = second;
+            } else {
+                day = first;
+                month = second;
+            }
+        } else {
+            return null;
+        }
+    }
+
     return isValidDate({ year, month, day }) ? { year, month, day } : null;
-  }
-
-  const parts = trimmed.split(/\D+/).filter(Boolean);
-  if (parts.length !== 3) return null;
-
-  const [first, second, third] = parts.map(Number);
-  if ([first, second, third].some((part) => Number.isNaN(part))) return null;
-
-  let year;
-  let month;
-  let day;
-
-  if (parts[0].length === 4) {
-    year = first;
-    month = second;
-    day = third;
-  } else if (parts[2].length === 4) {
-    year = third;
-
-    if (first <= 12 && second <= 12) {
-      month = first;
-      day = second;
-    } else if (first > 12) {
-      day = first;
-      month = second;
-    } else {
-      day = first;
-      month = second;
-    }
-  } else {
-    if (parts[2].length === 2) {
-      year = 2000 + third;
-      if (first <= 12 && second <= 12) {
-        month = first;
-        day = second;
-      } else if (first > 12) {
-        day = first;
-        month = second;
-      } else {
-        day = first;
-        month = second;
-      }
-    } else {
-      return null;
-    }
-  }
-
-  return isValidDate({ year, month, day }) ? { year, month, day } : null;
 };
 
 const matchesTargetDate = (parts) =>
-  parts &&
-  parts.year === targetDate.year &&
-  parts.month === targetDate.month &&
-  parts.day === targetDate.day;
+    parts &&
+    parts.year === targetDate.year &&
+    parts.month === targetDate.month &&
+    parts.day === targetDate.day;
 
 if (gateForm) {
-  gateForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!gateDateInput) return;
+    gateForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!gateDateInput) return;
 
-    const digits = gateDateInput.value.replace(/\D/g, "");
-    if (digits === "20250731") {
-      if (gateError) gateError.textContent = "";
-      window.location.href = "index.html";
-      return;
-    }
-
-    const partsFromText = parseDateParts(gateDateInput.value);
-    const partsFromPicker = gateDateInput.valueAsDate
-      ? {
-          year: gateDateInput.valueAsDate.getUTCFullYear(),
-          month: gateDateInput.valueAsDate.getUTCMonth() + 1,
-          day: gateDateInput.valueAsDate.getUTCDate()
+        const digits = gateDateInput.value.replace(/\D/g, "");
+        if (digits === "20250731") {
+            if (gateError) gateError.textContent = "";
+            window.location.href = "index.html";
+            return;
         }
-      : null;
 
-    const parts = partsFromText || partsFromPicker;
-    const matchesByDigits =
-      digits === "20250731" || digits === "31072025" || digits === "07312025";
+        const partsFromText = parseDateParts(gateDateInput.value);
+        const partsFromPicker = gateDateInput.valueAsDate
+            ? {
+                year: gateDateInput.valueAsDate.getUTCFullYear(),
+                month: gateDateInput.valueAsDate.getUTCMonth() + 1,
+                day: gateDateInput.valueAsDate.getUTCDate()
+            }
+            : null;
 
-    if (!parts && !matchesByDigits) {
-      if (gateError) {
-        gateError.textContent = "Įvesk datą (YYYY-MM-DD).";
-      }
-      return;
-    }
+        const parts = partsFromText || partsFromPicker;
+        const matchesByDigits =
+            digits === "20250731" || digits === "31072025" || digits === "07312025";
 
-    if (matchesByDigits || matchesTargetDate(parts)) {
-      if (gateError) gateError.textContent = "";
-      window.location.href = "index.html";
-    } else if (gateError) {
-      gateError.textContent = "Netinkama data. Pabandyk dar kartą.";
-    }
-  });
+        if (!parts && !matchesByDigits) {
+            if (gateError) {
+                gateError.textContent = "Įvesk datą (YYYY-MM-DD).";
+            }
+            return;
+        }
+
+        if (matchesByDigits || matchesTargetDate(parts)) {
+            if (gateError) gateError.textContent = "";
+            window.location.href = "index.html";
+        } else if (gateError) {
+            gateError.textContent = "Netinkama data. Pabandyk dar kartą.";
+        }
+    });
 }
 
 const setEnvelopeOpen = (isOpen) => {
-  if (!envelope) return;
-  envelope.classList.toggle("is-open", isOpen);
-  if (envelopePaper) {
-    envelopePaper.setAttribute("aria-hidden", isOpen ? "false" : "true");
-  }
-  envelope.setAttribute("aria-expanded", isOpen ? "true" : "false");
-  if (!isOpen) {
-    envelope.classList.remove("is-ribbon-untie");
-  }
+    if (!envelope) return;
+    envelope.classList.toggle("is-open", isOpen);
+    if (envelopePaper) {
+        envelopePaper.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    }
+    envelope.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    if (!isOpen) {
+        envelope.classList.remove("is-ribbon-untie");
+    }
 };
 
 const triggerRibbonUntie = () => {
-  if (!envelope) return;
-  envelope.classList.remove("is-ribbon-untie");
-  void envelope.offsetWidth;
-  envelope.classList.add("is-ribbon-untie");
-  if (ribbonTimer) window.clearTimeout(ribbonTimer);
-  ribbonTimer = window.setTimeout(() => {
+    if (!envelope) return;
     envelope.classList.remove("is-ribbon-untie");
-  }, 900);
+    void envelope.offsetWidth;
+    envelope.classList.add("is-ribbon-untie");
+    if (ribbonTimer) window.clearTimeout(ribbonTimer);
+    ribbonTimer = window.setTimeout(() => {
+        envelope.classList.remove("is-ribbon-untie");
+    }, 900);
 };
 
 if (envelope) {
-  envelope.addEventListener("click", () => {
-    const willOpen = !envelope.classList.contains("is-open");
-    setEnvelopeOpen(willOpen);
-    if (willOpen) {
-      triggerRibbonUntie();
-    }
-  });
+    envelope.addEventListener("click", () => {
+        const willOpen = !envelope.classList.contains("is-open");
+        setEnvelopeOpen(willOpen);
+        if (willOpen) {
+            triggerRibbonUntie();
+        }
+    });
 }
 
 const root = document.documentElement;
 if (shouldAutoUnlock()) {
-  gate?.classList.add("is-hidden");
-  document.body.classList.remove("is-locked");
+    gate?.classList.add("is-hidden");
+    document.body.classList.remove("is-locked");
 }
 root.classList.remove("gate-preload");
 
 window.addEventListener("resize", () => {
-  refreshHearts();
-  updateInputModeClass();
+    refreshHearts();
+    updateInputModeClass();
 });
