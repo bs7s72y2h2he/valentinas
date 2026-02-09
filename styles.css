@@ -94,10 +94,7 @@
   .note__content {
     padding: 2vw 0;
   }
-  .envelope {
-    max-width: 95vw;
-    margin: 0 auto;
-  }
+
 }
 /* Modal preview langas su overlay */
 .preview-modal {

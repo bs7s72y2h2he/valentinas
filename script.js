@@ -132,6 +132,8 @@ const envelopeMessage = document.getElementById('envelope-message');
 const envelopeChoose = document.getElementById('envelope-choose');
 const gateFormWrap = document.getElementById('gate-form-wrap');
 if (envelopeBtns.length && envelopeMessage && gateFormWrap && envelopeChoose) {
+  // Visada rodyti vokų pasirinkimą pradžioje
+  envelopeChoose.style.display = "block";
   gateFormWrap.style.display = "none";
   const correct = Math.floor(Math.random() * 3);
   let unlocked = false;
