@@ -2,12 +2,7 @@
 <html lang="lt">
   <head>
     <meta charset="UTF-8" />
-    <script>
-      // Jei nesame preview puslapyje, peradresuoti į preview.html
-      if (!window.location.pathname.includes('preview')) {
-        window.location.href = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'preview.html';
-      }
-    </script>
+    <!-- Pašalintas automatinis peradresavimas į preview.html -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       document.documentElement.classList.add("gate-preload");

@@ -6,16 +6,36 @@ function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 if (previewModal && previewStartBtn) {
-  // Rodyti modalą tik jei esame preview puslapyje ir ne telefone
-  if (window.location.pathname.includes('preview') && !isMobile()) {
+  // Rodyti modalą ir gate tiek desktop, tiek mobile preview.html
+  if (window.location.pathname.includes('preview')) {
     previewModal.style.display = 'flex';
+    document.getElementById('gate').style.display = 'none';
+    previewStartBtn.addEventListener('click', () => {
+      previewModal.style.display = 'none';
+      document.getElementById('gate').style.display = 'block';
+      // Gate atrakinimo logika (tik preview.html)
+      const gateForm = document.getElementById('gate-form');
+      const gateError = document.getElementById('gate-error');
+      if (gateForm) {
+        gateForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const input = document.getElementById('gate-date');
+          const value = input.value.trim();
+          // Pakeiskite į teisingą datą (pvz. '2021-02-14' arba kita forma)
+          const correct = ['2021-02-14', '14-02-2021', '14/02/2021', '2021/02/14', '2021.02.14', '2021 02 14', '14 02 2021'];
+          if (correct.includes(value)) {
+            // Sėkmingai atrakinta, redirect į index.html
+            window.location.href = 'index.html';
+          } else {
+            gateError.textContent = 'Neteisinga data!';
+            if (window.navigator.vibrate) window.navigator.vibrate(200);
+          }
+        });
+      }
+    });
   } else {
     previewModal.style.display = 'none';
   }
-  previewStartBtn.addEventListener('click', () => {
-    previewModal.style.display = 'none';
-    document.getElementById('gate').style.display = 'block';
-  });
 }
 
 
