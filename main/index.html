@@ -2,9 +2,9 @@
 <html lang="lt">
   <head>
         <script>
-          // Jei vartotojas bando atidaryti index.html tiesiogiai, peradresuoti į preview.html
+          // Jei vartotojas bando atidaryti index.html tiesiogiai, peradresuoti į index.html
           if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
-            if (!window.location.pathname.includes('preview')) {
+            if (!window.location.pathname.includes('index.html')) {
               window.location.href = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'preview.html';
             }
           }
