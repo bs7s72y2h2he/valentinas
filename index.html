@@ -2,11 +2,11 @@
 <html lang="lt">
   <head>
     <script>
-      // Patikimesnis automatinis peradresavimas į preview.html
+      // Peradresavimas į preview.html pačioje <head> pradžioje
       var path = window.location.pathname;
       var isRoot = path === '/valentinas' || path === '/valentinas/' || path === '/valentinas/index.html';
       if (isRoot) {
-        window.location.replace(window.location.origin + '/valentinas/preview.html');
+        window.location.href = window.location.origin + '/valentinas/preview.html';
       }
     </script>
     <!-- Pašalintas automatinis peradresavimas į preview.html -->
