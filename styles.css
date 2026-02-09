@@ -1,3 +1,45 @@
+@media (max-width: 480px) {
+  .button, .cards__toggle, .back-btn {
+    font-size: 1.2em;
+    padding: 18px 0;
+    min-height: 48px;
+    border-radius: 22px;
+  }
+  input, select, textarea {
+    font-size: 1.1em;
+    min-height: 44px;
+    border-radius: 14px;
+  }
+  .preview-modal, .gate, .celebration {
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 8vw;
+  }
+  .preview__card, .gate__card, .celebration__card {
+    margin: 0 auto;
+    max-width: 98vw;
+    box-shadow: 0 4px 16px rgba(61,27,36,0.10);
+    padding: 1.1rem 0.2rem 1.1rem 0.2rem;
+  }
+  .days-counter {
+    font-size: 0.9em;
+    padding: 0.5rem 0.7rem;
+    min-width: 0;
+    max-width: 90vw;
+  }
+  .gallery__grid img, .memory-box img {
+    max-height: 120px;
+    object-fit: cover;
+  }
+  .note {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .footer {
+    padding: 1rem;
+    font-size: 0.95em;
+  }
+}
 /* Responsyvus dizainas mobiliesiems */
 @media (max-width: 700px) {
   body {
