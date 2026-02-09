@@ -720,40 +720,30 @@ if (gateForm) {
   gateForm.addEventListener("submit", (event) => {
     event.preventDefault();
     if (!gateDateInput) return;
-
-    const digits = gateDateInput.value.replace(/\D/g, "");
-    if (digits === "20250731") {
+    const value = gateDateInput.value.trim();
+    const digits = value.replace(/\D/g, "");
+    // Priimami formatai: 2025-07-31, 31-07-2025, 20250731, 31072025
+    if (digits === "20250731" || digits === "31072025" || digits === "07312025") {
       if (gateError) gateError.textContent = "";
       unlockPage();
       return;
     }
-
-    const partsFromText = parseDateParts(gateDateInput.value);
-    const partsFromPicker = gateDateInput.valueAsDate
-      ? {
-          year: gateDateInput.valueAsDate.getUTCFullYear(),
-          month: gateDateInput.valueAsDate.getUTCMonth() + 1,
-          day: gateDateInput.valueAsDate.getUTCDate()
-        }
-      : null;
-
-    const parts = partsFromText || partsFromPicker;
-    const matchesByDigits =
-      digits === "20250731" || digits === "31072025" || digits === "07312025";
-
-    if (!parts && !matchesByDigits) {
-      if (gateError) {
-        gateError.textContent = "Įvesk datą (YYYY-MM-DD).";
+    // Papildoma validacija pagal datą
+    const parts = value.split(/[-./ ]/);
+    if (parts.length === 3) {
+      let y, m, d;
+      if (parts[0].length === 4) {
+        y = +parts[0]; m = +parts[1]; d = +parts[2];
+      } else if (parts[2].length === 4) {
+        y = +parts[2]; m = +parts[1]; d = +parts[0];
       }
-      return;
+      if (y === 2025 && m === 7 && d === 31) {
+        if (gateError) gateError.textContent = "";
+        unlockPage();
+        return;
+      }
     }
-
-    if (matchesByDigits || matchesTargetDate(parts)) {
-      if (gateError) gateError.textContent = "";
-      unlockPage();
-    } else if (gateError) {
-      gateError.textContent = "Netinkama data. Pabandyk dar kartą.";
-    }
+    if (gateError) gateError.textContent = "Netinkama data. Pabandyk dar kartą.";
   });
 }
 
