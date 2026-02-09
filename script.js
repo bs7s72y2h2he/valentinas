@@ -1,18 +1,17 @@
-// Preview puslapio logika
+// Preview modalas ir gate rodomi tik preview.html puslapyje
 const previewModal = document.getElementById('preview-modal');
 const previewStartBtn = document.getElementById('preview-start');
-// Tik preview.html rodyti modalą, pagrindiniame puslapyje ir/ar telefone - nerodyti
 function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
-if (previewModal && previewStartBtn) {
-  // Rodyti modalą ir gate tiek desktop, tiek mobile preview.html
-  if (window.location.pathname.includes('preview')) {
+if (window.location.pathname.includes('preview')) {
+  if (previewModal && previewStartBtn) {
     previewModal.style.display = 'flex';
-    document.getElementById('gate').style.display = 'none';
+    const gate = document.getElementById('gate');
+    if (gate) gate.style.display = 'none';
     previewStartBtn.addEventListener('click', () => {
       previewModal.style.display = 'none';
-      document.getElementById('gate').style.display = 'block';
+      if (gate) gate.style.display = 'block';
       // Gate atrakinimo logika (tik preview.html)
       const gateForm = document.getElementById('gate-form');
       const gateError = document.getElementById('gate-error');
@@ -33,9 +32,10 @@ if (previewModal && previewStartBtn) {
         });
       }
     });
-  } else {
-    previewModal.style.display = 'none';
   }
+} else {
+  // Užtikriname, kad kituose puslapiuose modalas niekada nebūtų rodomas
+  if (previewModal) previewModal.style.display = 'none';
 }
 
 
