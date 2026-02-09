@@ -143,6 +143,9 @@ if (envelopeBtns.length && envelopeMessage && gateFormWrap && envelopeChoose) {
       } else {
         btn.classList.add('shake');
         envelopeMessage.textContent = "Šiame voke nieko nėra. Pabandyk kitą!";
+        if (window.navigator && window.navigator.vibrate) {
+          window.navigator.vibrate(200);
+        }
         setTimeout(() => {
           btn.classList.remove('shake');
         }, 400);
