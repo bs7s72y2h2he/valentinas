@@ -1,3 +1,72 @@
+@media (max-width: 600px) {
+  .gate__card {
+    max-width: 99vw;
+    padding: 1.1rem 0.2rem 1.3rem 0.2rem;
+    border-radius: 18px;
+    gap: 0.7rem;
+  }
+  .envelope-row {
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .envelope-btn {
+    width: 70px;
+    height: 50px;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+  }
+  .envelope-graphic {
+    width: 70px !important;
+    height: 50px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+  }
+  .envelope-flap-v,
+  .envelope-flap-v2,
+  .envelope-body {
+    width: 70px !important;
+    height: 18px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+  }
+  .envelope-flap-v2 {
+    top: 9px !important;
+  }
+  .envelope-body {
+    height: 27px !important;
+    top: 12px !important;
+  }
+  .envelope-ribbon {
+    width: 32px !important;
+    left: 6px !important;
+    top: 20px !important;
+    height: 3px !important;
+  }
+  .envelope-bow {
+    width: 8px !important;
+    height: 5px !important;
+    top: 24px !important;
+  }
+  .hearts-garland {
+    height: 14px;
+    margin-bottom: 0.1rem;
+  }
+  .garland-string {
+    top: 6px;
+    border-bottom-width: 1px;
+  }
+  .garland-heart {
+    width: 10px;
+    height: 10px;
+  }
+  .envelope-hint {
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+}
 /* Meilės girlianda virš vokų */
 .hearts-garland {
   position: relative;
