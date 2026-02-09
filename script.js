@@ -1,9 +1,19 @@
 // Preview puslapio logika
-const preview = document.getElementById('preview');
+const previewModal = document.getElementById('preview-modal');
 const previewStartBtn = document.getElementById('preview-start');
-if (preview && previewStartBtn) {
+// Tik preview.html rodyti modalą, pagrindiniame puslapyje ir/ar telefone - nerodyti
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+if (previewModal && previewStartBtn) {
+  // Rodyti modalą tik jei esame preview puslapyje ir ne telefone
+  if (window.location.pathname.includes('preview') && !isMobile()) {
+    previewModal.style.display = 'flex';
+  } else {
+    previewModal.style.display = 'none';
+  }
   previewStartBtn.addEventListener('click', () => {
-    preview.style.display = 'none';
+    previewModal.style.display = 'none';
     document.getElementById('gate').style.display = 'block';
   });
 }

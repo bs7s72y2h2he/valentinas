@@ -1,3 +1,73 @@
+/* Modal preview langas su overlay */
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 234, 233, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+.preview__card {
+  position: relative;
+  z-index: 2;
+  background: #fff9f2;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(61, 27, 36, 0.18);
+  padding: 2.5rem 1.2rem 2.5rem 1.2rem;
+  text-align: center;
+  max-width: 420px;
+  margin: 0 1rem;
+  animation: preview-pop 0.5s cubic-bezier(.4,2,.6,1.2);
+}
+.preview__card h2 {
+  color: var(--berry);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.preview-heart {
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+.preview__card p {
+  font-size: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+.preview__card .button {
+  font-size: 1.1rem;
+  padding: 0.8em 2em;
+  border-radius: 18px;
+}
+@keyframes preview-pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@media (max-width: 600px) {
+  .preview__card {
+    padding: 1.2rem 0.3rem 1.2rem 0.3rem;
+    max-width: 95vw;
+    border-radius: 18px;
+    box-shadow: 0 12px 32px rgba(61, 27, 36, 0.12);
+    text-align: center;
+    margin: 0 0.2rem;
+  }
+  .preview__card h2 {
+    font-size: 1.3rem;
+  }
+  .preview__card p {
+    font-size: 1rem;
+  }
+}
 @media (max-width: 600px) {
   .preview__card {
     margin-left: auto;
