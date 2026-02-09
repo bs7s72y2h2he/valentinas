@@ -621,6 +621,8 @@ const unlockPage = () => {
     document.body.classList.remove("is-locked");
     celebration?.classList.remove("is-visible");
     refreshHearts();
+    // Automatinis peradresavimas į index.html po šventės animacijos
+    window.location.href = 'index.html';
   }, celebrationDuration);
 };
 
