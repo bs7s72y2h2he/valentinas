@@ -145,7 +145,6 @@ function createPetal() {
   }, duration * 1000);
 }
 
-let petalsInterval = null;
 function startPetals() {
   if (petalsInterval) return;
   petalsInterval = setInterval(createPetal, 900);
