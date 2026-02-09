@@ -16,13 +16,13 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css?v=2" />
   </head>
-  <body class="is-locked">
+  <body class="is-locked" style="min-height:100vh; background: radial-gradient(circle at top, #fff7ef 0%, #fde4d1 45%, #f9c8b9 100%); display:flex; align-items:center; justify-content:center;">
     <div class="background-hearts" aria-hidden="true"></div>
     <div class="days-counter" id="days-counter" aria-live="polite">
       <span class="days-counter__label">Mūsų praleistas laikas kartu</span>
       <span class="days-counter__value" id="days-counter-value"></span>
     </div>
-    <div class="gate" id="gate" aria-label="Slaptas įėjimas" style="display:block;">
+    <div class="gate" id="gate" aria-label="Slaptas įėjimas" style="display:flex; align-items:center; justify-content:center; min-height:80vh; width:100vw;">
       <div class="gate__card">
         <div class="petals" id="petals"></div>
         <div class="floating-hearts" id="floating-hearts"></div>
@@ -82,11 +82,14 @@
               <label class="gate__label" for="gate-date"></label>
               <input
                 id="gate-date"
-                type="text"
-                placeholder="Įvesk datą"
+                type="tel"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                placeholder="YYYY-MM-DD arba 2025-07-31"
                 autocomplete="off"
                 autocorrect="off"
                 autocapitalize="off"
+                style="font-size:1.2em; text-align:center; letter-spacing:0.1em;"
               />
               <button class="button" type="submit">Spausk čia, kad atrakintum</button>
               <p class="gate__error" id="gate-error" role="status" aria-live="polite"></p>
