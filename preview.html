@@ -18,16 +18,14 @@
   </head>
   <body class="is-locked">
     <div class="background-hearts" aria-hidden="true"></div>
-    <div class="days-counter" id="days-counter" aria-live="polite">
-      <span class="days-counter__label">Mūsų praleistas laikas kartu</span>
-      <span class="days-counter__value" id="days-counter-value"></span>
-    </div>
-    <div class="preview-modal" id="preview-modal" style="display:flex;">
-      <div class="preview-overlay"></div>
-      <div class="preview__card">
-        <h2>Labas, mano meile! <span class="preview-heart">💝</span></h2>
-        <p>Ši svetainė skirta tik tau. Pasiruošk siurprizui ir paspausk „Pradėti“.</p>
-        <button class="button" id="preview-start">Pradėti</button>
+    <div class="preview-center-wrap" style="min-height:100vh;display:flex;align-items:center;justify-content:center;">
+      <div class="preview-modal" id="preview-modal" style="display:flex;">
+        <div class="preview-overlay"></div>
+        <div class="preview__card">
+          <h2>Labas, mano meile! <span class="preview-heart">💝</span></h2>
+          <p>Ši svetainė skirta tik tau. Pasiruošk siurprizui ir paspausk „Pradėti“.</p>
+          <button class="button" id="preview-start">Pradėti</button>
+        </div>
       </div>
     </div>
     <div class="gate" id="gate" aria-label="Slaptas įėjimas" style="display:none;">
