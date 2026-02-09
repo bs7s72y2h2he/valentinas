@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="lt">
   <head>
-        <script>
-          // Automatinis peradresavimas į preview.html, kai atidaromas šakninis puslapis
-          if (window.location.pathname === '/valentinas/' || window.location.pathname === '/valentinas') {
-            window.location.replace(window.location.origin + '/valentinas/preview.html');
-          }
-        </script>
+    <script>
+      // Patikimesnis automatinis peradresavimas į preview.html
+      var path = window.location.pathname;
+      var isRoot = path === '/valentinas' || path === '/valentinas/' || path === '/valentinas/index.html';
+      if (isRoot) {
+        window.location.replace(window.location.origin + '/valentinas/preview.html');
+      }
+    </script>
     <!-- Pašalintas automatinis peradresavimas į preview.html -->
     <meta charset="UTF-8" />
     <!-- Pašalintas automatinis peradresavimas į preview.html -->
