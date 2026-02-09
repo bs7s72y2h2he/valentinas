@@ -1,5 +1,7 @@
 
 (function() {
+    // Declare index page variables at top scope
+    var cardsGrid, scoreValue, cardsToggle, cardsSection, heartsContainer, brightnessSlider, speedSlider, heartToggle, heartClose;
   // Preview modalas tik preview.html, gate logika tik gate.html
   const previewModal = document.getElementById('preview-modal');
   const previewStartBtn = document.getElementById('preview-start');
@@ -123,15 +125,15 @@
 
 // ...existing code...
 if (window.location.pathname.includes('index')) {
-  var cardsGrid = document.getElementById("cards-grid");
-  var scoreValue = document.getElementById("score-value");
-  var cardsToggle = document.getElementById("cards-toggle");
-  var cardsSection = document.querySelector(".cards");
-  var heartsContainer = document.querySelector(".background-hearts");
-  var brightnessSlider = document.getElementById("heart-brightness");
-  var speedSlider = document.getElementById("heart-speed");
-  var heartToggle = document.getElementById("heart-toggle");
-  var heartClose = document.getElementById("heart-close");
+  cardsGrid = document.getElementById("cards-grid");
+  scoreValue = document.getElementById("score-value");
+  cardsToggle = document.getElementById("cards-toggle");
+  cardsSection = document.querySelector(".cards");
+  heartsContainer = document.querySelector(".background-hearts");
+  brightnessSlider = document.getElementById("heart-brightness");
+  speedSlider = document.getElementById("heart-speed");
+  heartToggle = document.getElementById("heart-toggle");
+  heartClose = document.getElementById("heart-close");
 }
 
 // Gate logika (vokai, forma) tik gate.html
