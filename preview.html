@@ -28,6 +28,12 @@
         <h2>Labas, mano meile! <span class="preview-heart">💝</span></h2>
         <p>Ši svetainė skirta tik tau. Pasiruošk siurprizui ir paspausk „Pradėti“.</p>
         <button class="button" id="preview-start">Pradėti</button>
+        <script>
+          // Po 4 sekundžių automatiškai peradresuoja į gate.html
+          setTimeout(function() {
+            window.location.href = 'gate.html';
+          }, 4000);
+        </script>
       </div>
     </div>
     <!-- gate pašalintas iš preview.html -->
