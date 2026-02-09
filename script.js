@@ -509,6 +509,7 @@ const setupScratchCanvas = (card, canvas) => {
 };
 
 const renderCards = (data) => {
+  if (!cardsGrid) return;
   cardsGrid.innerHTML = "";
   data.forEach((text) => {
     const card = createCard(text);
@@ -528,11 +529,12 @@ if (cardsToggle) {
   });
 }
 
-renderCards(cardsData);
 
-setCardsExpanded(false);
-
-updateInputModeClass();
+if (typeof cardsGrid !== 'undefined' && cardsGrid) {
+  renderCards(cardsData);
+  setCardsExpanded(false);
+  updateInputModeClass();
+}
 
 document.querySelectorAll(".memory-box").forEach((box) => {
   const lid = box.querySelector(".memory-box__lid");
