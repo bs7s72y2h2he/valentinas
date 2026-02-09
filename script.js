@@ -1,36 +1,40 @@
-// Preview modalas tik preview.html, gate logika tik gate.html
-const previewModal = document.getElementById('preview-modal');
-const previewStartBtn = document.getElementById('preview-start');
-if (window.location.pathname.includes('preview')) {
-  if (previewModal && previewStartBtn) {
-    previewModal.style.display = 'flex';
-    previewStartBtn.addEventListener('click', function() {
-      window.location.href = 'gate.html';
-    });
-  }
-}
 
-// Gate logika tik gate.html
-if (window.location.pathname.includes('gate')) {
-  const gateForm = document.getElementById('gate-form');
-  const gateError = document.getElementById('gate-error');
-  if (gateForm && gateError) {
-    gateForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const input = document.getElementById('gate-date');
-      const value = input ? input.value.trim() : '';
-      // Pakeiskite į teisingą datą (pvz. '2021-02-14' arba kita forma)
-      const correct = ['2021-02-14', '14-02-2021', '14/02/2021', '2021/02/14', '2021.02.14', '2021 02 14', '14 02 2021'];
-      if (correct.includes(value)) {
-        // Sėkmingai atrakinta, redirect į index.html
-        window.location.href = 'index.html';
-      } else {
-        gateError.textContent = 'Neteisinga data!';
-        if (window.navigator.vibrate) window.navigator.vibrate(200);
-      }
-    });
+(function() {
+  // Preview modalas tik preview.html, gate logika tik gate.html
+  const previewModal = document.getElementById('preview-modal');
+  const previewStartBtn = document.getElementById('preview-start');
+  if (window.location.pathname.includes('preview')) {
+    if (previewModal && previewStartBtn) {
+      previewModal.style.display = 'flex';
+      previewStartBtn.addEventListener('click', function() {
+        window.location.href = 'gate.html';
+      });
+    }
   }
-}
+
+  // Gate logika tik gate.html
+  if (window.location.pathname.includes('gate')) {
+    const gateForm = document.getElementById('gate-form');
+    const gateError = document.getElementById('gate-error');
+    if (gateForm && gateError) {
+      gateForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = document.getElementById('gate-date');
+        const value = input ? input.value.trim() : '';
+        // Pakeiskite į teisingą datą (pvz. '2021-02-14' arba kita forma)
+        const correct = ['2021-02-14', '14-02-2021', '14/02/2021', '2021/02/14', '2021.02.14', '2021 02 14', '14 02 2021'];
+        if (correct.includes(value)) {
+          // Sėkmingai atrakinta, redirect į index.html
+          window.location.href = 'index.html';
+        } else {
+          gateError.textContent = 'Neteisinga data!';
+          if (window.navigator.vibrate) window.navigator.vibrate(200);
+        }
+      });
+    }
+  }
+// ...existing code...
+})();
 
 
 // Rožių žiedlapių generavimas
