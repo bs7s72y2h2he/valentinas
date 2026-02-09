@@ -121,7 +121,7 @@
 
 // ...existing code...
 
-let cardsGrid, scoreValue, cardsToggle, cardsSection, heartsContainer, brightnessSlider, speedSlider, heartToggle, heartClose;
+// ...existing code...
 if (window.location.pathname.includes('index')) {
   cardsGrid = document.getElementById("cards-grid");
   scoreValue = document.getElementById("score-value");
