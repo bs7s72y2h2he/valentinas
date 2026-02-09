@@ -2,8 +2,12 @@
 <html lang="lt">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <script>
+      // Redirect root to preview.html
+      if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/valentinas/" || window.location.pathname === "/valentinas/index.html") {
+        window.location.href = "preview.html";
+      }
       document.documentElement.classList.add("gate-preload");
     </script>
     <title>Mūsų meilės diena 💝</title>
