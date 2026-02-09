@@ -127,25 +127,30 @@ const cardsData = [
   "Tu esi mano šiandien ir rytoj"
 ];
 
-const cardsGrid = document.getElementById("cards-grid");
-const scoreValue = document.getElementById("score-value");
-const cardsToggle = document.getElementById("cards-toggle");
-const cardsSection = document.querySelector(".cards");
-const heartsContainer = document.querySelector(".background-hearts");
-const brightnessSlider = document.getElementById("heart-brightness");
-const speedSlider = document.getElementById("heart-speed");
-const heartToggle = document.getElementById("heart-toggle");
-const heartClose = document.getElementById("heart-close");
+let cardsGrid, scoreValue, cardsToggle, cardsSection, heartsContainer, brightnessSlider, speedSlider, heartToggle, heartClose;
+if (window.location.pathname.includes('index')) {
+  cardsGrid = document.getElementById("cards-grid");
+  scoreValue = document.getElementById("score-value");
+  cardsToggle = document.getElementById("cards-toggle");
+  cardsSection = document.querySelector(".cards");
+  heartsContainer = document.querySelector(".background-hearts");
+  brightnessSlider = document.getElementById("heart-brightness");
+  speedSlider = document.getElementById("heart-speed");
+  heartToggle = document.getElementById("heart-toggle");
+  heartClose = document.getElementById("heart-close");
+  // ...kortelių logika čia...
+}
+
+// Gate logika (vokai, forma) tik gate.html
 const gate = document.getElementById("gate");
 const gateForm = document.getElementById("gate-form");
 const gateDateInput = document.getElementById("gate-date");
 const gateError = document.getElementById("gate-error");
 const envelopeBtns = document.querySelectorAll('.envelope-btn');
 const envelopeMessage = document.getElementById('envelope-message');
-// 3 vokų pasirinkimo interaktyvumas
 const envelopeChoose = document.getElementById('envelope-choose');
 const gateFormWrap = document.getElementById('gate-form-wrap');
-if (envelopeBtns.length && envelopeMessage && gateFormWrap && envelopeChoose) {
+if (window.location.pathname.includes('gate') && envelopeBtns.length && envelopeMessage && gateFormWrap && envelopeChoose) {
   gateFormWrap.style.display = "none";
   const correct = Math.floor(Math.random() * 3);
   let unlocked = false;
