@@ -138,7 +138,7 @@ if (window.location.pathname.includes('index')) {
 
 // Gate logika (vokai, forma) tik gate.html
 // const gate = document.getElementById("gate"); // Already declared above
-// const gateForm = document.getElementById("gate-form"); // Already declared above
+// Duplicate declaration removed. Only one gateForm variable should exist.
 const gateDateInput = document.getElementById("gate-date");
 const gateError = document.getElementById("gate-error");
 const envelopeBtns = document.querySelectorAll('.envelope-btn');
