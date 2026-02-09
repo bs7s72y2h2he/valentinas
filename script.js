@@ -119,20 +119,7 @@
 
 
 
-const cardsData = [
-  "Tavo šypsena padaro diena šviesesne",
-  "Tu moki nusijuokti iš smulkmenų",
-  "Tavo apkabinimai yra mano ramybė",
-  "Tu kuri mūsų saugią erdvę",
-  "Su tavimi viskas tampa nuotykis",
-  "Tavo akys pasako daugiau nei žodžiai",
-  "Tu visada pastebi mažus dalykus",
-  "Tu moki klausytis ir girdėti",
-  "Tu esi mano drąsa",
-  "Tu esi mano ramybė",
-  "Tu esi mano mėgstamiausias žmogus",
-  "Tu esi mano šiandien ir rytoj"
-];
+// ...existing code...
 
 let cardsGrid, scoreValue, cardsToggle, cardsSection, heartsContainer, brightnessSlider, speedSlider, heartToggle, heartClose;
 if (window.location.pathname.includes('index')) {
