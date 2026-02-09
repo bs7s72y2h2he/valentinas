@@ -113,7 +113,7 @@
     if (heartsContainer) heartsContainer.innerHTML = '';
   }
 
-  // ...visa likusi jūsų logika, kintamieji ir funkcijos taip pat turi būti šiame bloke...
+
 
 })();
 
@@ -145,7 +145,6 @@ if (window.location.pathname.includes('index')) {
   speedSlider = document.getElementById("heart-speed");
   heartToggle = document.getElementById("heart-toggle");
   heartClose = document.getElementById("heart-close");
-  // ...kortelių logika čia...
 }
 
 // Gate logika (vokai, forma) tik gate.html
@@ -544,19 +543,24 @@ if (cardsToggle) {
 }
 
 
-if (typeof cardsGrid !== 'undefined' && cardsGrid) {
+if (typeof cardsGrid !== 'undefined' && cardsGrid && scoreValue && cardsSection) {
   renderCards(cardsData);
   setCardsExpanded(false);
   updateInputModeClass();
 }
 
-document.querySelectorAll(".memory-box").forEach((box) => {
-  const lid = box.querySelector(".memory-box__lid");
-  lid?.addEventListener("click", (event) => {
-    event.preventDefault();
-    box.classList.toggle("is-open");
+const memoryBoxes = document.querySelectorAll(".memory-box");
+if (memoryBoxes.length) {
+  memoryBoxes.forEach((box) => {
+    const lid = box.querySelector(".memory-box__lid");
+    if (lid) {
+      lid.addEventListener("click", (event) => {
+        event.preventDefault();
+        box.classList.toggle("is-open");
+      });
+    }
   });
-});
+}
 
 const createFloatingHearts = (count) => {
   if (!heartsContainer) return;
