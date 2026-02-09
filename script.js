@@ -22,8 +22,8 @@ if (window.location.pathname.includes('gate')) {
       // Pakeiskite į teisingą datą (pvz. '2021-02-14' arba kita forma)
       const correct = ['2021-02-14', '14-02-2021', '14/02/2021', '2021/02/14', '2021.02.14', '2021 02 14', '14 02 2021'];
       if (correct.includes(value)) {
-        // Sėkmingai atrakinta, redirect į pagrindinį turinį
-        window.location.href = 'main/index.html';
+        // Sėkmingai atrakinta, redirect į index.html
+        window.location.href = 'index.html';
       } else {
         gateError.textContent = 'Neteisinga data!';
         if (window.navigator.vibrate) window.navigator.vibrate(200);
