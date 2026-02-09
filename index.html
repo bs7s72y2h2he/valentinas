@@ -6,21 +6,19 @@
     <script>
       // Redirect only from root, not after secret code
       // Jei localStorage turi unlock, neredirectinam
-      var isRoot = window.location.pathname.replace(/\/index\.html$/, "") === "/valentinas/";
-      try {
+      var isRoot = window.location.pathname === "/valentinas/";
+      if (isRoot) {
         var unlock = localStorage.getItem("valentinoUnlock");
         var unlocked = false;
         if (unlock) {
-          var parsed = JSON.parse(unlock);
-          if (parsed && parsed.unlockedAt && Date.now() - parsed.unlockedAt < 10 * 60 * 1000) {
-            unlocked = true;
-          }
+          try {
+            var parsed = JSON.parse(unlock);
+            if (parsed && parsed.unlockedAt && Date.now() - parsed.unlockedAt < 10 * 60 * 1000) {
+              unlocked = true;
+            }
+          } catch (e) {}
         }
-        if (!unlocked && isRoot) {
-          window.location.href = "preview.html";
-        }
-      } catch (e) {
-        if (isRoot) {
+        if (!unlocked) {
           window.location.href = "preview.html";
         }
       }
