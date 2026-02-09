@@ -642,7 +642,6 @@
             event.preventDefault();
             if (!gateDateInput) return;
             const digits = gateDateInput.value.replace(/\D/g, "");
-            // Tik sėkmingai suvedus kodą nukreipia į index.html
             const partsFromText = parseDateParts(gateDateInput.value);
             const partsFromPicker = gateDateInput.valueAsDate
                 ? {
@@ -663,6 +662,12 @@
             if (matchesByDigits || matchesTargetDate(parts)) {
                 if (gateError) gateError.textContent = "";
                 window.location.href = "index.html";
+                // Kai atsidaro index.html, nuimame 'is-locked' ir paslepiame celebration
+                setTimeout(function() {
+                  document.body.classList.remove("is-locked");
+                  var celebrationModal = document.getElementById("celebration");
+                  if (celebrationModal) celebrationModal.classList.remove("is-visible");
+                }, 300);
             } else if (gateError) {
                 gateError.textContent = "Netinkama data. Pabandyk dar kartą.";
             }
