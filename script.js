@@ -605,7 +605,8 @@ const unlockPage = () => {
     celebration.style.display = "block";
     celebration.scrollIntoView({behavior:'smooth'});
   }
-  // ...existing unlock logika...
+  // Po atrakinimo visada nukreipia į index.html
+  window.location.href = "index.html";
 };
 
 const shouldAutoUnlock = () => {
