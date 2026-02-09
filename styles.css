@@ -1449,19 +1449,19 @@ h2 {
   opacity: 0.9;
 }
 
-.hero__petals {
-  position: absolute;
-  inset: -5% -8%;
-  border-radius: 48% 52% 46% 54% / 48% 50% 50% 52%;
-  z-index: -2;
-  background:
-    radial-gradient(ellipse 60% 40% at 18% 32%, rgba(243, 111, 127, 0.45), transparent 68%),
-    radial-gradient(ellipse 58% 38% at 72% 26%, rgba(255, 214, 196, 0.65), transparent 70%),
-    radial-gradient(ellipse 62% 44% at 38% 78%, rgba(247, 199, 166, 0.6), transparent 70%),
-    radial-gradient(ellipse 50% 36% at 84% 72%, rgba(243, 111, 127, 0.42), transparent 68%);
-  filter: blur(4px);
-  opacity: 0.95;
-}
+  .hero__petals {
+    position: absolute;
+    inset: 0;
+    border-radius: 48% 52% 46% 54% / 48% 50% 50% 52%;
+    z-index: -2;
+    background:
+      radial-gradient(ellipse 60% 40% at 18% 32%, rgba(243, 111, 127, 0.15), transparent 68%),
+      radial-gradient(ellipse 58% 38% at 72% 26%, rgba(255, 214, 196, 0.18), transparent 70%),
+      radial-gradient(ellipse 62% 44% at 38% 78%, rgba(247, 199, 166, 0.18), transparent 70%),
+      radial-gradient(ellipse 50% 36% at 84% 72%, rgba(243, 111, 127, 0.12), transparent 68%);
+    filter: blur(8px);
+    opacity: 0.7;
+  }
 
 .hero__actions {
   display: flex;
@@ -2324,61 +2324,51 @@ h2 {
     padding: 2.2rem 1rem 3rem;
     gap: 3.5rem;
   }
-
   .hero {
     gap: 1.8rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2vw 0;
   }
-
   .hero__title-wrap {
     padding: 1.6rem 1.8rem;
   }
-
   .hero__petals {
-    inset: -10% -12%;
+    inset: 0;
   }
-
-
   .hero__photo {
     padding: 0.75rem;
     border-radius: 26px;
   }
-
   .hero__photo img {
     border-radius: 20px;
   }
-
   .hero__badge {
     top: 0.9rem;
     right: 0.9rem;
     font-size: 0.75rem;
   }
-
   .cards__grid {
     grid-template-columns: 1fr;
   }
-
   .card {
     min-height: 200px;
     padding: 1.2rem;
   }
-
   .card__inner {
     height: 180px;
   }
-
   .note {
     padding: 1.8rem;
     gap: 1.5rem;
   }
-
   .memory-box {
     padding: 1.1rem 1rem 1.3rem;
   }
-
   .memory-box__lid {
     height: 50px;
   }
-
   .memory-box__heart {
     width: 72px;
     height: 64px;
