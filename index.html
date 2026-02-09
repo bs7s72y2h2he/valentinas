@@ -1,14 +1,6 @@
 <!doctype html>
 <html lang="lt">
   <head>
-        <script>
-          // Jei vartotojas bando atidaryti index.html tiesiogiai, peradresuoti į preview.html
-          if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
-            if (!window.location.pathname.includes('preview')) {
-              window.location.href = window.location.origin + window.location.pathname.replace(/[^/]*$/, '') + 'preview.html';
-            }
-          }
-        </script>
     <meta charset="UTF-8" />
     <!-- Pašalintas automatinis peradresavimas į preview.html -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
