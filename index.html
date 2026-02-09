@@ -1,6 +1,27 @@
 <!doctype html>
 <html lang="lt">
   <head>
+        <script>
+          // Redirect only from root, not after secret code
+          // Jei localStorage turi unlock, neredirectinam
+          var isRoot = window.location.pathname === "/valentinas/";
+          if (isRoot) {
+            var unlock = localStorage.getItem("valentinoUnlock");
+            var unlocked = false;
+            if (unlock) {
+              try {
+                var parsed = JSON.parse(unlock);
+                if (parsed && parsed.unlockedAt && Date.now() - parsed.unlockedAt < 10 * 60 * 1000) {
+                  unlocked = true;
+                }
+              } catch (e) {}
+            }
+            if (!unlocked) {
+              window.location.href = "preview.html";
+            }
+          }
+          document.documentElement.classList.add("gate-preload");
+        </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <script>
