@@ -755,7 +755,8 @@ if (gateForm) {
     const digits = gateDateInput.value.replace(/\D/g, "");
     if (digits === "20250731") {
       if (gateError) gateError.textContent = "";
-      unlockPage();
+      // Vietoj unlockPage() – redirect
+      window.location.href = "main/index.html";
       return;
     }
 
@@ -781,7 +782,7 @@ if (gateForm) {
 
     if (matchesByDigits || matchesTargetDate(parts)) {
       if (gateError) gateError.textContent = "";
-      unlockPage();
+      window.location.href = "main/index.html";
     } else if (gateError) {
       gateError.textContent = "Netinkama data. Pabandyk dar kartą.";
     }
