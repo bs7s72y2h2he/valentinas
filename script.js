@@ -19,13 +19,11 @@ if (window.location.pathname.includes('gate')) {
       e.preventDefault();
       const input = document.getElementById('gate-date');
       const value = input ? input.value.trim() : '';
+      // Pakeiskite į teisingą datą (pvz. '2021-02-14' arba kita forma)
       const correct = ['2021-02-14', '14-02-2021', '14/02/2021', '2021/02/14', '2021.02.14', '2021 02 14', '14 02 2021'];
       if (correct.includes(value)) {
-        // Sėkmingai atrakinta, parodyti sėkmės žinutę ir po trumpo laiko peradresuoti
-        gateError.textContent = 'Atrakinta! Peradresuojama...';
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 1200);
+        // Sėkmingai atrakinta, redirect į pagrindinį turinį
+        window.location.href = 'main/index.html';
       } else {
         gateError.textContent = 'Neteisinga data!';
         if (window.navigator.vibrate) window.navigator.vibrate(200);
