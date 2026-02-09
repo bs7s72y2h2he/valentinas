@@ -145,18 +145,6 @@ function createPetal() {
   }, duration * 1000);
 }
 
-function startPetals() {
-  if (petalsInterval) return;
-  petalsInterval = setInterval(createPetal, 900);
-}
-function stopPetals() {
-  if (petalsInterval) {
-    clearInterval(petalsInterval);
-    petalsInterval = null;
-  }
-  const petalsContainer = document.getElementById('petals');
-  if (petalsContainer) petalsContainer.innerHTML = '';
-}
 
 // Plaukiojančių širdelių generavimas
 function createFloatingHeart() {
