@@ -37,6 +37,7 @@
                 window.location.href = 'gate.html';
             });
         }
+        // Pašalinta automatinė redirect logika, redirect vyksta tik paspaudus mygtuką
     }
     if (window.location.pathname.includes('gate')) {
         gateForm = document.getElementById('gate-form');
@@ -641,11 +642,7 @@
             event.preventDefault();
             if (!gateDateInput) return;
             const digits = gateDateInput.value.replace(/\D/g, "");
-            if (digits === "20250731") {
-                if (gateError) gateError.textContent = "";
-                window.location.href = "index.html";
-                return;
-            }
+            // Tik sėkmingai suvedus kodą nukreipia į index.html
             const partsFromText = parseDateParts(gateDateInput.value);
             const partsFromPicker = gateDateInput.valueAsDate
                 ? {
